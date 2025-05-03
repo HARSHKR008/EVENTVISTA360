@@ -12,6 +12,15 @@ const EventDetails = () => {
   const [error, setError] = useState(null); // State to handle errors
   const [selected360Image, setSelected360Image] = useState(null);
 
+  const images = [
+    '/1.webp', '/2.webp', '/3.webp', '/4.webp', '/5.webp',
+    '/6.webp', '/7.webp', '/8.webp', '/9.webp', '/10.webp',
+    '/11.webp', '/12.webp', '/13.webp', '/14.webp', '/15.webp',
+    '/16.webp', '/17.webp', '/18.webp', '/19.webp', '/31.webp',
+    '/32.webp', '/33.webp', '/34.webp', '/35.webp', '/36.webp',
+    '/37.webp', '/38.webp', '/39.webp', '/40.webp'
+  ];
+
   useEffect(() => {
     // Fetch event details by ID
     axios
@@ -76,18 +85,17 @@ const EventDetails = () => {
           {event.images360 && event.images360.length > 0 && (
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">360° Views</h2>
-              
+
               {/* Thumbnails for 360° images */}
               <div className="flex gap-4 mb-6 overflow-x-auto pb-4">
                 {event.images360.map((url, idx) => (
                   <div
                     key={idx}
                     onClick={() => setSelected360Image(url)}
-                    className={`cursor-pointer transition-all ${
-                      selected360Image === url
+                    className={`cursor-pointer transition-all ${selected360Image === url
                         ? 'ring-4 ring-indigo-500 scale-105'
                         : 'hover:scale-105'
-                    }`}
+                      }`}
                   >
                     <img
                       src={url}
@@ -105,7 +113,7 @@ const EventDetails = () => {
                 </div>
               )}
 
-
+              <ThreeDViewer images={images} frameCount={29} />
               {/* <Viewer3D /> */}
             </div>
           )}
