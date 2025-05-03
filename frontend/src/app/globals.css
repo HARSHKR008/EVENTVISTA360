@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@source "node_modules/preline/dist";
+
+html{
+    scroll-behavior: smooth;
+}
