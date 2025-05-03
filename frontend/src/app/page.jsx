@@ -21,7 +21,7 @@ const Home = () => {
                 <div className="container mx-auto px-4 text-center">
                     {/* Website Title */}
                     <h1 className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-pink-600 to-blue-600 drop-shadow-lg mb-4 transition-transform transform hover:scale-105 duration-300">
-                        EventVista360
+                        EventVista 360
                     </h1>
                     {/* Tagline */}
                     <h2 className="text-gray-700 font-semibold text-2xl md:text-3xl italic mb-6 transition-opacity duration-1000 opacity-90">
