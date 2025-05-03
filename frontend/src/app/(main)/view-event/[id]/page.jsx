@@ -3,6 +3,7 @@ import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PanoramaViewer from '@/components/PanoramaViewer';
+import Viewer3D from '../../3dviewer/page';
 
 const EventDetails = () => {
   const { id } = useParams(); // Extract the event ID from the URL
@@ -103,6 +104,9 @@ const EventDetails = () => {
                   <PanoramaViewer imageUrl={selected360Image} />
                 </div>
               )}
+
+
+              {/* <Viewer3D /> */}
             </div>
           )}
         </div>
