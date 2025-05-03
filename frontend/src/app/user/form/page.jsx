@@ -7,6 +7,8 @@ import toast from 'react-hot-toast';
 const VenueForm = () => {
   const [normalImages, setNormalImages] = useState([]);
   const [images360, setImages360] = useState([]);
+  const [model360, setModel360] = useState([]);
+  const [model, setModel] = useState([]);
   const [uploading, setUploading] = useState(false);
 
   const venuseForm = useFormik({
@@ -17,6 +19,7 @@ const VenueForm = () => {
       capacity: 0,
       normalImages: [],
       images360: [],
+      model360: [],
       category: ''
     },
     onSubmit: (values, {resetForm}) => {
@@ -158,6 +161,41 @@ const VenueForm = () => {
 
             <div className="mt-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">360° Panorama Images</label>
+              <input
+                type="file"
+                onChange={(e) => uploadImages(e, false)}
+                multiple
+                accept="image/*"
+                className="mt-1 block w-full text-sm text-gray-500
+                  file:mr-4 file:py-2 file:px-4
+                  file:rounded-md file:border-0
+                  file:text-sm file:font-semibold
+                  file:bg-indigo-50 file:text-indigo-700
+                  hover:file:bg-indigo-100"
+              />
+              
+              <div className="mt-4 grid grid-cols-3 gap-4">
+                {images360.map((url, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={url}
+                      alt={`360° ${index + 1}`}
+                      className="w-full h-32 object-cover rounded-lg"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeImage(index, false)}
+                      className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full m-1 hover:bg-red-600"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+              {uploading && <p className="mt-2 text-sm text-gray-500">Uploading...</p>}
+            </div>
+            <div className="mt-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">model images</label>
               <input
                 type="file"
                 onChange={(e) => uploadImages(e, false)}

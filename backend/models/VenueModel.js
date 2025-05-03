@@ -30,6 +30,10 @@ const venueSchema = new Schema({
         type: String,
         required: true,
     }],
+    model360: [{
+        type: String,
+        required: true,
+    }],
     createdAt: {
         type: Date,
         default: Date.now,
