@@ -21,7 +21,7 @@ const Browse = () => {
       });
   }, []);
 
-  return (
+  return ( 
     <div>
       <>
         <title>Browse Events | EventMaster</title>
