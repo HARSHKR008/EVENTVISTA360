@@ -1,7 +1,9 @@
-import express from 'express';
-import Feedback from '../models/feedbackmodel.js';
+const express = require('express');
+const router = express.Router();
+const Feedback = require('../models/feedbackmodel.js');
 
-export const isAuthenticated = (req, res, next) => {
+// Middleware for authentication
+const isAuthenticated = (req, res, next) => {
   // Add your authentication logic here
   // Example: Check for valid JWT token
   if (!req.user) {
@@ -12,8 +14,6 @@ export const isAuthenticated = (req, res, next) => {
   }
   next();
 };
-
-const router = express.Router();
 
 // Create new feedback
 router.post('/submit-feedback', async (req, res) => {
@@ -51,12 +51,10 @@ router.post('/submit-feedback', async (req, res) => {
 router.get('/all-feedbacks', isAuthenticated, async (req, res) => {
   try {
     const feedbacks = await Feedback.find().sort({ createdAt: -1 });
-
     res.status(200).json({
       success: true,
       feedbacks
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -108,7 +106,6 @@ router.get('/statistics', isAuthenticated, async (req, res) => {
         eventWiseRating
       }
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -121,21 +118,17 @@ router.get('/statistics', isAuthenticated, async (req, res) => {
 router.delete('/delete/:id', isAuthenticated, async (req, res) => {
   try {
     const feedback = await Feedback.findById(req.params.id);
-
     if (!feedback) {
       return res.status(404).json({
         success: false,
         message: 'Feedback not found'
       });
     }
-
     await feedback.deleteOne();
-
     res.status(200).json({
       success: true,
       message: 'Feedback deleted successfully'
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -144,8 +137,4 @@ router.delete('/delete/:id', isAuthenticated, async (req, res) => {
   }
 });
 
-export default router;
-
-// In your main app.js or server.js
-import feedbackRouter from './routers/feedbackrouter.js';
-app.use('/api/feedback', feedbackRouter);
+module.exports = router;
