@@ -15,9 +15,8 @@ const Home = () => {
                     speed={2}
                 />
             </div>
+            {/* hero section */}
             <section className="w-full py-20">
-
-
                 <div className="container mx-auto px-4 text-center">
                     {/* Website Title */}c
                     <h1 className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-pink-600 to-blue-600 drop-shadow-lg mb-4 transition-transform transform hover:scale-105 duration-300">
@@ -41,6 +40,7 @@ const Home = () => {
                     </a>
                 </div>
             </section>
+
             <section className="">
                 <div className="max-w-screen-xl 2xl:max-w-screen-3xl px-8 md:px-12 mx-auto py-12 lg:py-24 flex flex-col items-center justify-center space-y-12">
                     {/* Centered GALLERY Text */}
@@ -84,6 +84,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
             <section className="bg-white py-16 px-8">
                 <div className="max-w-screen-xl mx-auto text-center">
                     {/* Heading */}
@@ -145,6 +146,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
             <footer className="w-full py-14">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="max-w-3xl mx-auto">
