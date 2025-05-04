@@ -24,7 +24,7 @@ const Feedback = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/feedback', {
+      const response = await fetch('http://localhost:5000/feed/submit-feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -224,6 +224,7 @@ const Feedback = () => {
                   setShowThankYou(false);
                   setFormData({ event: '', rating: 0, liked: '' });
                 }}
+                type="button"
                 className="px-6 py-2.5 rounded-xl border border-gray-300/70 text-gray-700 hover:bg-white/50"
               >
                 <i className="fas fa-redo mr-2" /> Submit Another
