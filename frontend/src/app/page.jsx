@@ -14,34 +14,6 @@ const Home = () => {
                     speed={2}
                 />
             </div>
-<<<<<<< HEAD
-            {/* hero section */}
-            <section className="w-full py-20">
-                <div className="container mx-auto px-4 text-center">
-                    {/* Website Title */}c
-                    <h1 className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-pink-600 to-blue-600 drop-shadow-lg mb-4 transition-transform transform hover:scale-105 duration-300">
-                        EventVista 360
-                    </h1>
-                    {/* Tagline */}
-                    <h2 className="text-gray-700 font-semibold text-2xl md:text-3xl italic mb-6 transition-opacity duration-1000 opacity-90">
-                        Where Every Detail Tells Your Story.
-                    </h2>
-                    {/* Description */}
-                    <p className="text-gray-600 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-                        We help you create the best memories of your special moments with style,
-                        passion, and precision. Let us make your event unforgettable.
-                    </p>
-                    {/* Book Now Button */}
-                    <a
-                        href="/browse"
-                        className="inline-block px-8 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl hover:from-purple-600 hover:to-pink-600 transform hover:scale-a transition-all duration-300"
-                    >
-                        BROWSE
-                    </a>
-                </div>
-            </section>
-
-=======
             <section className="w-full py-40 relative text-white overflow-hidden">
                 {/* Video Background */}
                 <video
@@ -81,7 +53,6 @@ const Home = () => {
             </section>
 
 
->>>>>>> 108a4b38d46a8954e733bffbd54141ce047a7709
             <section className="">
                 <div className="max-w-screen-xl 2xl:max-w-screen-3xl px-8 md:px-12 mx-auto py-12 lg:py-24 flex flex-col items-center justify-center space-y-12">
                     {/* Centered GALLERY Text */}
@@ -126,72 +97,6 @@ const Home = () => {
                 </div>
             </section>
 
-<<<<<<< HEAD
-            <section className="bg-white py-16 px-8">
-                <div className="max-w-screen-xl mx-auto text-center">
-                    {/* Heading */}
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-12">
-                        What We Offer
-                    </h2>
-                    {/* 3x2 Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                        {/* Offer Item */}
-                        <div className="p-6 bg-gradient-to-r from-pink-100 via-purple-100 to-blue-100 rounded-xl shadow-lg hover:scale-105 transition transform duration-500 cursor-pointer">
-                            <i className="fas fa-camera-retro text-4xl text-purple-600 mb-4" />
-                            <h3 className="text-2xl font-bold text-gray-800 mb-2">Photography</h3>
-                            <p className="text-gray-600">
-                                Capture your special moments with our professional photography
-                                services.
-                            </p>
-                        </div>
-                        <div className="p-6 bg-gradient-to-r from-yellow-100 via-pink-100 to-red-100 rounded-xl shadow-lg hover:scale-105 transition transform duration-500 cursor-pointer">
-                            <i className="fas fa-music text-4xl text-red-500 mb-4" />
-                            <h3 className="text-2xl font-bold text-gray-800 mb-2">
-                                Music &amp; DJ
-                            </h3>
-                            <p className="text-gray-600">
-                                Live music, DJ services, and sound systems for every occasion.
-                            </p>
-                        </div>
-                        <div className="p-6 bg-gradient-to-r from-green-100 via-blue-100 to-purple-100 rounded-xl shadow-lg hover:scale-105 transition transform duration-500 cursor-pointer">
-                            <i className="fas fa-utensils text-4xl text-green-500 mb-4" />
-                            <h3 className="text-2xl font-bold text-gray-800 mb-2">Catering</h3>
-                            <p className="text-gray-600">
-                                Delicious cuisine options tailored to your event and preferences.
-                            </p>
-                        </div>
-                        <div className="p-6 bg-gradient-to-r from-blue-100 via-cyan-100 to-teal-100 rounded-xl shadow-lg hover:scale-105 transition transform duration-500 cursor-pointer">
-                            <i className="fas fa-umbrella-beach text-4xl text-blue-500 mb-4" />
-                            <h3 className="text-2xl font-bold text-gray-800 mb-2">Decorations</h3>
-                            <p className="text-gray-600">
-                                Beautiful, customizable decor to match your event theme.
-                            </p>
-                        </div>
-                        <div className="p-6 bg-gradient-to-r from-indigo-100 via-violet-100 to-pink-100 rounded-xl shadow-lg hover:scale-105 transition transform duration-500 cursor-pointer">
-                            <i className="fas fa-glass-cheers text-4xl text-indigo-500 mb-4" />
-                            <h3 className="text-2xl font-bold text-gray-800 mb-2">
-                                Event Planning
-                            </h3>
-                            <p className="text-gray-600">
-                                End-to-end event planning for stress-free, seamless experiences.
-                            </p>
-                        </div>
-                        <div className="p-6 bg-gradient-to-r from-orange-100 via-amber-100 to-yellow-100 rounded-xl shadow-lg hover:scale-105 transition transform duration-500 cursor-pointer">
-                            <i className="fas fa-bus-alt text-4xl text-orange-500 mb-4" />
-                            <h3 className="text-2xl font-bold text-gray-800 mb-2">
-                                Transportation
-                            </h3>
-                            <p className="text-gray-600">
-                                Comfortable and reliable transport solutions for your guests.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <footer className="w-full py-14">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-=======
 
             <footer
                 className="w-full py-14 bg-cover bg-center text-white relative"
@@ -199,7 +104,6 @@ const Home = () => {
             >
 
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
->>>>>>> 108a4b38d46a8954e733bffbd54141ce047a7709
                     <div className="max-w-3xl mx-auto">
                         <a className="flex justify-center text-4xl font-bold">EVENT VISTA 360</a>
 
