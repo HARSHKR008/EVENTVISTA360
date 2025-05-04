@@ -14,43 +14,34 @@ const Home = () => {
                     speed={2}
                 />
             </div>
-            <section className="w-full py-40 relative text-white overflow-hidden">
-                {/* Video Background */}
-                <video
-                    autoPlay
-                    muted
-                    loop
-                    className="absolute inset-0 w-full h-full object-cover z-0"
-                >
-                    <source src="/images/vid-2.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
-                {/* Optional dark overlay */}
-                {/* <div class="absolute inset-0 bg-black bg-opacity-50 z-0"></div> */}
-                {/* Content */}
-                <div className="relative z-10 container mx-auto px-8 flex items-center justify-start min-h-[60vh]">
-                    <div className="bg-grey bg-opacity-100 p-12 rounded-2xl max-w-2xl shadow-2xl backdrop-blur-lg">
-                        <h1 className="text-6xl font-extrabold text-white mb-6 font-roboto">
-                            EVENT VISTA 360
-                        </h1>
-                        <h2 className="text-2xl italic font-light mb-6 text-gray-100 font-roboto">
-                            Where Every Detail Tells Your Story.
-                        </h2>
-                        <p className="text-lg mb-8 text-gray-200 font-merriweather">
-                            We help you create the best memories of your special moments with style,
-                            passion, and precision.
-                        </p>
-                        <a
-                            href="/browse"
-                            className="px-8 py-4 text-lg bg-gradient-to-r from-purple-500 to-pink-500 rounded-full font-bold text-white shadow-xl 
-           transform transition-all duration-300 ease-in-out 
-           hover:scale-110 hover:shadow-pink-500/50 hover:ring-2 hover:ring-white hover:ring-offset-2"
-                        >
-                            BROWSE
-                        </a>
-                    </div>
-                </div>
-            </section>
+            <section
+  style={{ background: 'url("/images/bg-4.jpg") no-repeat center center/cover' }}
+  className="w-full py-40 relative text-white"
+>
+  {/* Stronger Overlay */}
+  <div className="absolute inset-100 bg-black bg-opacity-10 z-0" />
+  {/* Content */}
+  <div className="relative z-10 container mx-auto px-8 flex items-center justify-start min-h-[60vh]">
+    <div className="bg-grey bg-opacity-200 p-12 rounded-2xl max-w-2xl shadow-2xl backdrop-blur-lg">
+      <h1 className="text-6xl font-extrabold text-white mb-6 font-roboto">
+        EVENT VISTA 360
+      </h1>
+      <h2 className="text-2xl italic font-light mb-6 text-gray-100 font-roboto">
+        Where Every Detail Tells Your Story.
+      </h2>
+      <p className="text-lg mb-8 text-gray-200 font-merriweather">
+        We help you create the best memories of your special moments with style,
+        passion, and precision.
+      </p>
+      <a
+        href="#"
+        className="px-8 py-4 text-lg bg-gradient-to-r from-purple-500 to-black-500 rounded-full font-bold shadow-xl hover:scale-105 transition-transform duration-300"
+      >
+        BROWSE
+      </a>
+    </div>
+  </div>
+</section>
 
 
             <section className="">
@@ -96,7 +87,6 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-
 
             <footer
                 className="w-full py-14 bg-cover bg-center text-white relative"
