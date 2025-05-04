@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const UserRouter = require('./routers/UserRouter');
 const VenueRouter = require('./routers/VenueRouters');
+const FeedRouter = require('./routers/feedbackrouter.js');
 const cors = require('cors');
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(cors({origin: '*'}))
 app.use(express.json());
 app.use('/user', UserRouter);
 app.use('/venue', VenueRouter);
+app.use('/feed', FeedRouter);
 
 // endpoint or route
 
