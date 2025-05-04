@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const feedbackSchema = new mongoose.Schema({
   event: {
@@ -24,4 +24,4 @@ const feedbackSchema = new mongoose.Schema({
 
 const Feedback = mongoose.models.Feedback || mongoose.model('Feedback', feedbackSchema);
 
-export default Feedback;
+module.exports = Feedback;
