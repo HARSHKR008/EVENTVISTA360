@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PanoramaViewer from '@/components/PanoramaViewer';
 import Viewer3D from '../../3dviewer/page';
+import ThreeDViewer from '@/components/ThreeDViewer';
 
 const EventDetails = () => {
   const { id } = useParams(); // Extract the event ID from the URL
