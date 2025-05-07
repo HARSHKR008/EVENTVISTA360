@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { FaCalendarAlt, FaUsers, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 
 const Dashboard = () => {
-    
+
     // Sample data
     const stats = [
         { title: "Total Events", value: 42, icon: <FaCalendarAlt className="text-blue-500" />, trend: "↑ 12%", trendColor: "text-green-500" },
@@ -91,9 +91,11 @@ const Dashboard = () => {
                         Manage Venues
                     </button>
                 </Link>
-                <button className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">
-                    View Reports
-                </button>
+                <Link href="/admin/manage-feedback" className="px-4 py-2 bg-purple-700 text-white rounded-md hover:bg-purple-700 transition-colors">
+                    <button className="px-4 py-2 bg-purple-700 text-white rounded-md hover:bg-purple-700 transition-colors">
+                        View Reports
+                    </button>
+                </Link>
             </div>
         </div>
     );

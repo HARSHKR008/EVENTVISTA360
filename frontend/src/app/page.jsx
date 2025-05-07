@@ -14,34 +14,35 @@ const Home = () => {
                     speed={2}
                 />
             </div>
+
             <section
-  style={{ background: 'url("/images/bg-4.jpg") no-repeat center center/cover' }}
-  className="w-full py-40 relative text-white"
->
-  {/* Stronger Overlay */}
-  <div className="absolute inset-100 bg-black bg-opacity-10 z-0" />
-  {/* Content */}
-  <div className="relative z-10 container mx-auto px-8 flex items-center justify-start min-h-[60vh]">
-    <div className="bg-grey bg-opacity-200 p-12 rounded-2xl max-w-2xl shadow-2xl backdrop-blur-lg">
-      <h1 className="text-6xl font-extrabold text-white mb-6 font-roboto">
-        EVENT VISTA 360
-      </h1>
-      <h2 className="text-2xl italic font-light mb-6 text-gray-100 font-roboto">
-        Where Every Detail Tells Your Story.
-      </h2>
-      <p className="text-lg mb-8 text-gray-200 font-merriweather">
-        We help you create the best memories of your special moments with style,
-        passion, and precision.
-      </p>
-      <a
-        href="#"
-        className="px-8 py-4 text-lg bg-gradient-to-r from-purple-500 to-black-500 rounded-full font-bold shadow-xl hover:scale-105 transition-transform duration-300"
-      >
-        BROWSE
-      </a>
-    </div>
-  </div>
-</section>
+                style={{ background: 'url("/images/bg-4.jpg") no-repeat center center/cover' }}
+                className="w-full py-40 relative text-white"
+            >
+                {/* Stronger Overlay */}
+                <div className="absolute inset-100 bg-black bg-opacity-10 z-0" />
+                {/* Content */}
+                <div className="relative z-10 container mx-auto px-8 flex items-center justify-start min-h-[60vh]">
+                    <div className="bg-grey bg-opacity-200 p-12 rounded-2xl max-w-2xl shadow-2xl backdrop-blur-lg">
+                        <h1 className="text-6xl font-extrabold text-white mb-6 font-roboto">
+                            EVENT VISTA 360
+                        </h1>
+                        <h2 className="text-2xl italic font-light mb-6 text-gray-100 font-roboto">
+                            Where Every Detail Tells Your Story.
+                        </h2>
+                        <p className="text-lg mb-8 text-gray-200 font-merriweather">
+                            We help you create the best memories of your special moments with style,
+                            passion, and precision.
+                        </p>
+                        <a
+                            href="#"
+                            className="px-8 py-4 text-lg bg-gradient-to-r from-purple-500 to-black-500 rounded-full font-bold shadow-xl hover:scale-105 transition-transform duration-300"
+                        >
+                            BROWSE
+                        </a>
+                    </div>
+                </div>
+            </section>
 
 
             <section className="">
@@ -141,8 +142,6 @@ const Home = () => {
                     </div>
                 </div>
             </footer>
-
-
 
         </div>
     )

@@ -27,7 +27,7 @@ const manageuser = () => {
     return (
         <div>
             <div className='container mx-auto py-10'>
-                <h1 className='text-center font-bold text-4xl'>Manage Users</h1>
+                <h1 className='text-center font-bold text-4xl'>Managefeedback</h1>
 
                 <table className='mt-5 w-full'>
                     <thead className='border'>
@@ -40,8 +40,8 @@ const manageuser = () => {
                     </thead>
                     <tbody>
                       {
-                        userList.map((user) => {
-                          return <tr key={user._id}>
+                        userList.map((user, index) => {
+                          return <tr key={index}>
                             <td className='p-3'>{user._id}</td>
                             <td className='p-3'>{user.name}</td>
                             <td className='p-3'>{user.email}</td>
