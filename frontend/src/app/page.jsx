@@ -7,12 +7,7 @@ const Home = () => {
         <div>
             <Navbar />
             <div>
-                <Aurora
-                    colorStops={["#00E5FF", "#00E1FD", "#1200FF"]}
-                    blend={0.5}
-                    amplitude={1}
-                    speed={2}
-                />
+
             </div>
             <section
   style={{ background: 'url("/images/bg-4.jpg") no-repeat center center/cover' }}
@@ -34,7 +29,7 @@ const Home = () => {
         passion, and precision.
       </p>
       <a
-        href="#"
+        href="/browse"
         className="px-8 py-4 text-lg bg-gradient-to-r from-purple-500 to-black-500 rounded-full font-bold shadow-xl hover:scale-105 transition-transform duration-300"
       >
         BROWSE

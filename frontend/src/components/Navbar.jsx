@@ -1,29 +1,66 @@
-import Link from 'next/link'
-import React from 'react'
+"use client"
+
+import Link from "next/link"
+import { useState } from "react"
+import { Menu } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const navLinks = [
+    { href: "/", label: "HOME" },
+    { href: "/aboutus", label: "ABOUT US" },
+    { href: "/services", label: "SERVICES" },
+    { href: "#", label: "GALLERY" },
+    { href: "/contactus", label: "CONTACT US" },
+  ]
+
   return (
-    <div>
-      <meta charSet="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Beautiful Header</title>
-      <header className="sticky top-0 z-50 bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg text-white">
-        <div className="container mx-auto flex flex-wrap p-4 flex-col md:flex-row items-center justify-between">
-          {/* Navigation */}
-          <nav className="flex flex-wrap items-center text-base justify-center space-x-6 font-medium">
-            <a href="/" className="hover:text-indigo-200 transition duration-200">HOME</a>
-            <a href="/aboutus" className="hover:text-indigo-200 transition duration-200">ABOUT US</a>
-            <a href="/services" className="hover:text-indigo-200 transition duration-200">SERVICES</a>
-            <a href="#" className="hover:text-indigo-200 transition duration-200">GALLERY</a>
-            <Link href="/contactus" className="hover:text-indigo-200 transition duration-200">CONTACT US</Link>
-          </nav>
-          {/* Login Button */}
-          <Link href="/login" className=" mt-4 md:mt-0 inline-flex items-center bg-white text-indigo-600 font-semibold py-2 px-5 rounded-full hover:bg-indigo-100 transition duration-300 shadow-md">
+    <header className="sticky top-0 z-50 bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg text-white">
+      <div className="container mx-auto flex items-center justify-between p-4">
+        {/* Mobile Menu */}
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetTrigger asChild className="md:hidden">
+            <Button variant="ghost" size="icon" className="text-white hover:bg-indigo-700">
+              <Menu className="h-6 w-6" />
+              <span className="sr-only">Toggle menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+            <nav className="flex flex-col space-y-6 pt-10">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="text-lg font-medium hover:text-indigo-200 transition duration-200"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </SheetContent>
+        </Sheet>
+
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center space-x-6 font-medium">
+          {navLinks.map((link) => (
+            <Link key={link.label} href={link.href} className="hover:text-indigo-200 transition duration-200">
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Login Button */}
+        <Link href="/login">
+          <Button className="bg-white text-indigo-600 hover:bg-indigo-100 font-semibold rounded-full shadow-md">
             LOGIN
-          </Link>
-        </div>
-      </header>
-    </div>
+          </Button>
+        </Link>
+      </div>
+    </header>
   )
 }
 

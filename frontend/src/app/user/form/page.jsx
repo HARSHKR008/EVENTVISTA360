@@ -7,9 +7,8 @@ import toast from 'react-hot-toast';
 const VenueForm = () => {
   const [normalImages, setNormalImages] = useState([]);
   const [images360, setImages360] = useState([]);
-  const [model360, setModel360] = useState([]);
-  const [model, setModel] = useState([]);
-  const [uploading, setUploading] = useState(false);
+  const [modelImages, setModelImages] = useState([]);
+  const [uploading, setUploading] = useState(false); // Add this line
 
   const venuseForm = useFormik({
     initialValues: {
@@ -17,22 +16,36 @@ const VenueForm = () => {
       description: '',
       location: '',
       capacity: 0,
+      category: '',
+      modelname: '',
       normalImages: [],
       images360: [],
-      model360: [],
-      category: ''
+      model360: []
     },
     onSubmit: (values, {resetForm}) => {
-      values.imgurl = normalImages;
-      values.images360 = images360;
+      const formData = {
+        name: values.name,
+        description: values.description,
+        location: values.location,
+        capacity: values.capacity,
+        category: values.category,
+        imgurl: normalImages,
+        images360: images360,
+        model360: [{
+          name: values.modelname,
+          description: values.description,
+          images360: modelImages
+        }]
+      };
       
-      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/venue/add`, values)
+      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/venue/add`, formData)
       .then((result) => {
         console.log(result.data);
         toast.success('Venue added successfully');
         resetForm();
         setNormalImages([]);
         setImages360([]);
+        setModelImages([]);
       }).catch((err) => {
         console.log(err);
         toast.error('Failed to add venue');
@@ -40,7 +53,7 @@ const VenueForm = () => {
     }
   });
 
-  const uploadImages = async (e, isNormalImage) => {
+  const uploadImages = async (e, type) => {
     const files = Array.from(e.target.files);
     setUploading(true);
 
@@ -57,10 +70,16 @@ const VenueForm = () => {
       const responses = await Promise.all(uploadPromises);
       const newUrls = responses.map(response => response.data.url);
       
-      if (isNormalImage) {
-        setNormalImages(prev => [...prev, ...newUrls]);
-      } else {
-        setImages360(prev => [...prev, ...newUrls]);
+      switch(type) {
+        case 'normal':
+          setNormalImages(prev => [...prev, ...newUrls]);
+          break;
+        case '360':
+          setImages360(prev => [...prev, ...newUrls]);
+          break;
+        case 'model':
+          setModelImages(prev => [...prev, ...newUrls]);
+          break;
       }
       toast.success('Files uploaded successfully');
     } catch (err) {
@@ -71,11 +90,17 @@ const VenueForm = () => {
     }
   };
 
-  const removeImage = (index, isNormalImage) => {
-    if (isNormalImage) {
-      setNormalImages(prev => prev.filter((_, i) => i !== index));
-    } else {
-      setImages360(prev => prev.filter((_, i) => i !== index));
+  const removeImage = (index, type) => {
+    switch(type) {
+      case 'normal':
+        setNormalImages(prev => prev.filter((_, i) => i !== index));
+        break;
+      case '360':
+        setImages360(prev => prev.filter((_, i) => i !== index));
+        break;
+      case 'model':
+        setModelImages(prev => prev.filter((_, i) => i !== index));
+        break;
     }
   };
 
@@ -128,7 +153,7 @@ const VenueForm = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">Normal Images</label>
               <input
                 type="file"
-                onChange={(e) => uploadImages(e, true)}
+                onChange={(e) => uploadImages(e, 'normal')}
                 multiple
                 accept="image/*"
                 className="mt-1 block w-full text-sm text-gray-500
@@ -149,7 +174,7 @@ const VenueForm = () => {
                     />
                     <button
                       type="button"
-                      onClick={() => removeImage(index, true)}
+                      onClick={() => removeImage(index, 'normal')}
                       className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full m-1 hover:bg-red-600"
                     >
                       ×
@@ -163,7 +188,7 @@ const VenueForm = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">360° Panorama Images</label>
               <input
                 type="file"
-                onChange={(e) => uploadImages(e, false)}
+                onChange={(e) => uploadImages(e, '360')}
                 multiple
                 accept="image/*"
                 className="mt-1 block w-full text-sm text-gray-500
@@ -184,7 +209,7 @@ const VenueForm = () => {
                     />
                     <button
                       type="button"
-                      onClick={() => removeImage(index, false)}
+                      onClick={() => removeImage(index, '360')}
                       className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full m-1 hover:bg-red-600"
                     >
                       ×
@@ -194,11 +219,12 @@ const VenueForm = () => {
               </div>
               {uploading && <p className="mt-2 text-sm text-gray-500">Uploading...</p>}
             </div>
+
             <div className="mt-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">model images</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Model Images</label>
               <input
                 type="file"
-                onChange={(e) => uploadImages(e, false)}
+                onChange={(e) => uploadImages(e, 'model')}
                 multiple
                 accept="image/*"
                 className="mt-1 block w-full text-sm text-gray-500
@@ -210,16 +236,16 @@ const VenueForm = () => {
               />
               
               <div className="mt-4 grid grid-cols-3 gap-4">
-                {images360.map((url, index) => (
+                {modelImages.map((url, index) => (
                   <div key={index} className="relative">
                     <img
                       src={url}
-                      alt={`360° ${index + 1}`}
+                      alt={`Model ${index + 1}`}
                       className="w-full h-32 object-cover rounded-lg"
                     />
                     <button
                       type="button"
-                      onClick={() => removeImage(index, false)}
+                      onClick={() => removeImage(index, 'model')}
                       className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full m-1 hover:bg-red-600"
                     >
                       ×
