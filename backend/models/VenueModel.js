@@ -1,10 +1,24 @@
 const { Schema, model } = require('../connection');
 
+const modelSchema = new Schema({
+    modelname: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    images360: [{
+        type: String,
+        required: true,
+    }]
+});
+
 const venueSchema = new Schema({
     name: {
         type: String,
         required: true,
-
     },
     description: {
         type: String,
@@ -30,10 +44,7 @@ const venueSchema = new Schema({
         type: String,
         required: true,
     }],
-    model360: [{
-        type: String,
-        required: true,
-    }],
+    model360: [modelSchema],
     createdAt: {
         type: Date,
         default: Date.now,

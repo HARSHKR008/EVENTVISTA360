@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const HeroSection = () => {
     return (
@@ -10,8 +11,12 @@ const HeroSection = () => {
                     <div className="mb-8">
                         {/* Replace with your actual logo */}
                         <img src="/" alt="Logo" className="mx-auto w-24 mb-2" />
-                        <h1 className="text-6x1 font-medium tracking-widest">Event Vista 360</h1>
-                        <p className="text-sm"></p>
+                        <h1 class="text-6xl font-extrabold text-white mb-6 font-roboto">
+          EVENT VISTA 360
+        </h1>
+        <h2 class="text-2xl italic font-light mb-6 text-gray-100 font-roboto">
+          Where Every Detail Tells Your Story.
+        </h2>
                     </div>
 
                     <div className='flex flex-col md:flex-row items-center justify-around w-full gap-8'>
@@ -21,9 +26,12 @@ const HeroSection = () => {
                         <div className=''>
                             <h2 className="text-4xl md:text-6xl font-bold leading-tight mb-4">Where Fairytales <br /> Become Reality</h2>
                             <p className="text-lg md:text-xl mb-6">Your trusted partner in wedding planning.</p>
-                            <button className="bg-[#e8d5c0] text-gray-800 font-semibold py-2 px-6 rounded border border-gray-700 hover:bg-[#d4c3af] transition">
-                                Book an Appointment
-                            </button>
+                            <Link 
+                                href="/browse" 
+                                className="inline-block bg-[#e8d5c0] text-gray-800 font-semibold py-2 px-6 rounded border border-gray-700 hover:bg-[#d4c3af] transition"
+                            >
+                                BROWSE
+                            </Link>
                         </div>
                     </div>
 
