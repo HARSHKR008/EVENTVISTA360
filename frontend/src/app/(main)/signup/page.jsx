@@ -5,14 +5,16 @@ import axios from 'axios'; // Ensure you install axios if you're using it for AP
 const Signup = () => {
   // Step 1: Initialize state for form inputs and errors
   const [formData, setFormData] = useState({
-    fullName: '',
+    name: '',
     email: '',
+    contact: '',
     password: ''
   });
 
   const [errors, setErrors] = useState({
-    fullName: '',
+    name: '',
     email: '',
+    contact: '',
     password: ''
   });
 
@@ -55,7 +57,7 @@ const Signup = () => {
 
     try {
       // Step 5: Send data to backend (API call)
-      const response = await axios.post('/api/signup', formData);
+      const response = await axios.post('http://localhost:5000/user/add', formData);
       console.log('Signup successful:', response.data);
       // Redirect user or show success message
     } catch (error) {
@@ -80,7 +82,7 @@ const Signup = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block mb-1 text-gray-800 font-medium">
-                Full Name
+                Name
               </label>
               <input
                 type="text"

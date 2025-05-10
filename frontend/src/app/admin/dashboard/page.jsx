@@ -5,41 +5,8 @@ import { useEffect, useState } from 'react';
 import { FaCalendarAlt, FaUsers, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 
 const Dashboard = () => {
-    const [dashboardData, setDashboardData] = useState({
-        venues: [],
-        totalVenues: 0,
-        totalUsers: 0,
-        recentVenues: [],
-        isLoading: true
-    });
 
-    useEffect(() => {
-        const fetchDashboardData = async () => {
-            try {
-                // Fetch venues data
-                const venuesResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/venue/getall`);
-                // Fetch users data (assuming you have a users endpoint)
-                const usersResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/getall`);
-
-                const venues = venuesResponse.data;
-                const users = usersResponse.data;
-
-                setDashboardData({
-                    venues: venues,
-                    totalVenues: venues.length,
-                    totalUsers: users.length,
-                    recentVenues: venues.slice(-3).reverse(), // Get last 3 venues
-                    isLoading: false
-                });
-            } catch (error) {
-                console.error('Error fetching dashboard data:', error);
-                setDashboardData(prev => ({ ...prev, isLoading: false }));
-            }
-        };
-
-        fetchDashboardData();
-    }, []);
-
+    // Sample data
     const stats = [
         {
             title: "Total Venues",
@@ -137,8 +104,10 @@ const Dashboard = () => {
                 <Link href="/admin/manage-venue" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
                     Manage Venues
                 </Link>
-                <Link href="/admin/reports" className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">
-                    View Reports
+                <Link href="/admin/manage-feedback" className="px-4 py-2 bg-purple-700 text-white rounded-md hover:bg-purple-700 transition-colors">
+                    <button className="px-4 py-2 bg-purple-700 text-white rounded-md hover:bg-purple-700 transition-colors">
+                        View Reports
+                    </button>
                 </Link>
             </div>
         </div>
