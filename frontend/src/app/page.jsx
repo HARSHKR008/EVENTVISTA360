@@ -10,13 +10,13 @@ const HeroSection = () => {
                     <div className="mb-8">
                         {/* Replace with your actual logo */}
                         <img src="/" alt="Logo" className="mx-auto w-24 mb-2" />
-                        <h1 className="text-2xl font-medium tracking-widest">E V 360</h1>
-                        <p className="text-sm">SLOGAN HERE</p>
+                        <h1 className="text-6x1 font-medium tracking-widest">Event Vista 360</h1>
+                        <p className="text-sm"></p>
                     </div>
 
                     <div className='flex flex-col md:flex-row items-center justify-around w-full gap-8'>
                         <div>
-                            <img src="/phool1.png" alt="" width={500}/>
+                            <img src="" alt="" width={500}/>
                         </div>
                         <div className=''>
                             <h2 className="text-4xl md:text-6xl font-bold leading-tight mb-4">Where Fairytales <br /> Become Reality</h2>
