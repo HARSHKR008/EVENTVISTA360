@@ -8,17 +8,32 @@ const ManageFeedback = () => {
     const [feedbackList, setFeedbackList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [deleteLoading, setDeleteLoading] = useState(null);
-
-    const fetchFeedbacks = async () => {
+    const [deleteLoading, setDeleteLoading] = useState(null);    const fetchFeedbacks = async () => {
         try {
             setLoading(true);
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/feed/all-feedbacks`);
-            setFeedbackList(res.data);
+            // Get token from localStorage
+            const token = localStorage.getItem('token');
+            if (!token) {
+                toast.error('Please login first');
+                window.location.href = '/login';
+                return;
+            }
+
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/feed/all-feedbacks`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            
+            if (res.data.success === false) {
+                throw new Error(res.data.message || 'Failed to fetch feedbacks');
+            }
+            
+            setFeedbackList(res.data.feedbacks || []);
         } catch (err) {
             console.error('Failed to fetch feedbacks:', err);
             setError('Failed to load feedbacks. Please try again.');
-            toast.error('Failed to load feedbacks');
+            toast.error(err.response?.data?.message || 'Failed to load feedbacks');
         } finally {
             setLoading(false);
         }
@@ -26,12 +41,20 @@ const ManageFeedback = () => {
 
     useEffect(() => {
         fetchFeedbacks();
-    }, []);
-
-    const deleteFeedback = async (id) => {
+    }, []);    const deleteFeedback = async (id) => {
         setDeleteLoading(id);
         try {
-            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/feedback/delete/${id}`);
+            const token = localStorage.getItem('token');
+            if (!token) {
+                toast.error('Please login first');
+                return;
+            }
+            
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/feed/delete/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             toast.success('Feedback deleted successfully');
             fetchFeedbacks();
         } catch (err) {
