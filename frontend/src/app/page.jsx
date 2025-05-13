@@ -20,9 +20,9 @@ const HeroSection = () => {
                     </div>
 
                     <div className='flex flex-col md:flex-row items-center justify-around w-full gap-8'>
-                        <div>
+                        {/* <div>
                             <img src="/phool1.png" alt="" width={500}/>
-                        </div>
+                        </div> */}
                         <div className=''>
                             <h2 className="text-4xl md:text-6xl font-bold leading-tight mb-4">Where Fairytales <br /> Become Reality</h2>
                             <p className="text-lg md:text-xl mb-6">Your trusted partner in wedding planning.</p>
