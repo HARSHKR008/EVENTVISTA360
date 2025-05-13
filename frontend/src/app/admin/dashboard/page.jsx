@@ -5,8 +5,41 @@ import { useEffect, useState } from 'react';
 import { FaCalendarAlt, FaUsers, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 
 const Dashboard = () => {
+    const [dashboardData, setDashboardData] = useState({
+        isLoading: true,
+        venues: [],
+        totalVenues: 0,
+        totalUsers: 0,
+        recentVenues: []
+    });
 
-    // Sample data
+    useEffect(() => {
+        const fetchDashboardData = async () => {
+            try {
+                const [venuesResponse, usersResponse] = await Promise.all([
+                    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/venue/getall`),
+                    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/getall`)
+                ]);
+
+                const venues = venuesResponse.data;
+                const users = usersResponse.data;
+
+                setDashboardData({
+                    isLoading: false,
+                    venues: venues,
+                    totalVenues: venues.length,
+                    totalUsers: users.length,
+                    recentVenues: venues.slice(-5).reverse() // Get last 5 venues
+                });
+            } catch (error) {
+                console.error('Error fetching dashboard data:', error);
+                setDashboardData(prev => ({ ...prev, isLoading: false }));
+            }
+        };
+
+        fetchDashboardData();
+    }, []);
+
     const stats = [
         {
             title: "Total Venues",

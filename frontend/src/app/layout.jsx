@@ -30,9 +30,9 @@ export default function RootLayout({ children }) {
         {/* <PrelineScript /> */}
         <Toaster />
         <VoiceProvider>
-          <Navbar />
+          
           {children}
-          <Footer />
+          
         </VoiceProvider>
       </body>
     </html>
