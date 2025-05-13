@@ -16,7 +16,7 @@ const HeroSection = () => {
         </h1>
         <h2 class="text-2xl italic font-light mb-6 text-gray-100 font-roboto">
           Where Every Detail Tells Your Story.
-        </h2>
+        </h2> 
                     </div>
 
                     <div className='flex flex-col md:flex-row items-center justify-around w-full gap-8'>
