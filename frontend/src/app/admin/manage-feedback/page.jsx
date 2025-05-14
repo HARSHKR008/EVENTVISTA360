@@ -8,7 +8,10 @@ const ManageFeedback = () => {
     const [feedbackList, setFeedbackList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [deleteLoading, setDeleteLoading] = useState(null);    const fetchFeedbacks = async () => {
+    const [deleteLoading, setDeleteLoading] = useState(null);
+
+
+    const fetchFeedbacks = async () => {
         try {
             setLoading(true);
             // Get token from localStorage
@@ -24,11 +27,11 @@ const ManageFeedback = () => {
                     'Authorization': `Bearer ${token}`
                 }
             });
-            
+
             if (res.data.success === false) {
                 throw new Error(res.data.message || 'Failed to fetch feedbacks');
             }
-            
+
             setFeedbackList(res.data.feedbacks || []);
         } catch (err) {
             console.error('Failed to fetch feedbacks:', err);
@@ -41,7 +44,7 @@ const ManageFeedback = () => {
 
     useEffect(() => {
         fetchFeedbacks();
-    }, []);    const deleteFeedback = async (id) => {
+    }, []); const deleteFeedback = async (id) => {
         setDeleteLoading(id);
         try {
             const token = localStorage.getItem('token');
@@ -49,7 +52,7 @@ const ManageFeedback = () => {
                 toast.error('Please login first');
                 return;
             }
-            
+
             await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/feed/delete/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -86,8 +89,8 @@ const ManageFeedback = () => {
                 {error && (
                     <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded">
                         <p>{error}</p>
-                        <button 
-                            onClick={fetchFeedbacks} 
+                        <button
+                            onClick={fetchFeedbacks}
                             className="mt-2 text-sm bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
                         >
                             Retry

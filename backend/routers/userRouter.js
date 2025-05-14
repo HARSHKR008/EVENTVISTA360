@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Model = require('../models/UserModel');
+const Model = require('../models/usermodel');
 const jwt = require('jsonwebtoken');
 
 router.post('/add', (req, res) => {
@@ -21,7 +21,6 @@ router.get('/getall', (req, res) => {
             res.status(200).json(result);
         }).catch((err) => {
             console.log(err);
-
         });
 });
 

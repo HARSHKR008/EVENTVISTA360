@@ -31,6 +31,7 @@ const Login = () => {
                 .then((result) => {
                     resetForm();
                     toast.success('Login successful!');
+                    localStorage.setItem('token', result.data.token);
                 }).catch((err) => {
                     setSubmitting(false);
                     console.log(err);
