@@ -18,7 +18,7 @@ const Navbar = () => {
   ]
 
   return (
-    <header className="sticky top-0 z-50 bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg text-white">
+    <header className="sticky top-0 z-50 bg-gradient-to-r from-emerald-400 to-emerald-800 shadow-lg text-white">
       <div className="container mx-auto flex items-center justify-between p-4">
         {/* Mobile Menu */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
