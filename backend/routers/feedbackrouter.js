@@ -1,18 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const Feedback = require('../models/feedbackmodel.js');
+const jwt = require('jsonwebtoken');
 
 // Middleware for authentication
 const isAuthenticated = (req, res, next) => {
-  // Add your authentication logic here
-  // Example: Check for valid JWT token
-  if (!req.user) {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: 'Please login first'
+      });
+    }
+
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (error) {
     return res.status(401).json({
       success: false,
-      message: 'Please login first'
+      message: 'Invalid or expired token'
     });
   }
-  next();
 };
 
 // Create new feedback
