@@ -16,7 +16,7 @@ const mySchema = new Schema({
     },
     contact: {
         type: Number,
-        required: true,
+        // required: true,
     },
     createdAt: {
         type: Date,
