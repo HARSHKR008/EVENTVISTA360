@@ -131,18 +131,58 @@ const Dashboard = () => {
 
             {/* Quick Actions */}
             <div className="flex flex-wrap gap-4">
-                <Link href="/admin/manage-user" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-                    Manage Users
-                </Link>
-                <Link href="/admin/manage-venue" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
-                    Manage Venues
-                </Link>
-                <Link href="/admin/manage-feedback" className="px-4 py-2 bg-purple-700 text-white rounded-md hover:bg-purple-700 transition-colors">
-                    <button className="px-4 py-2 bg-purple-700 text-white rounded-md hover:bg-purple-700 transition-colors">
-                        View Reports
-                    </button>
-                </Link>
-            </div>
+  <Link 
+    href="/admin/manage-user" 
+    className="relative px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:from-blue-700 hover:to-blue-600 group overflow-hidden"
+  >
+    <span className="relative z-10 flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+      </svg>
+      Manage Users
+    </span>
+    <span className="absolute inset-0 bg-blue-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+  </Link>
+
+  <Link 
+    href="/admin/manage-venue" 
+    className="relative px-6 py-3 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:from-green-700 hover:to-green-600 group overflow-hidden"
+  >
+    <span className="relative z-10 flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2H4a1 1 0 110-2V4zm3 1h2v2H7V5zm4 0h2v2h-2V5z" clipRule="evenodd" />
+      </svg>
+      Manage Venues
+    </span>
+    <span className="absolute inset-0 bg-green-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+  </Link>
+
+  <Link 
+    href="/admin/manage-feedback" 
+    className="relative px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:from-purple-700 hover:to-purple-600 group overflow-hidden"
+  >
+    <span className="relative z-10 flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
+      </svg>
+      View Feedback
+    </span>
+    <span className="absolute inset-0 bg-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+  </Link>
+
+  <Link 
+    href="/admin/cu" 
+    className="relative px-6 py-3 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:from-red-700 hover:to-red-600 group overflow-hidden"
+  >
+    <span className="relative z-10 flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+      </svg>
+      Queries
+    </span>
+    <span className="absolute inset-0 bg-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+  </Link>
+</div>
         </div>
     );
 };
