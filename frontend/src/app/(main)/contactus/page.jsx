@@ -23,7 +23,7 @@ const ContactPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    try {
+    try {      
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/contact/add`, formData, {
         headers: {
           'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ const ContactPage = () => {
                   className="space-y-6"
                 >
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                    <label className="text-sm font-medium text-gray-700 mb-1 flex items-center">
                       <FiUser className="mr-2" />
                       Your Name <span className="text-red-500 ml-1">*</span>
                     </label>
@@ -163,7 +163,7 @@ const ContactPage = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                    <label className="text-sm font-medium text-gray-700 mb-1 flex items-center">
                       <FiMail className="mr-2" />
                       Email Address <span className="text-red-500 ml-1">*</span>
                     </label>
@@ -189,7 +189,7 @@ const ContactPage = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                    <label className="text-sm font-medium text-gray-700 mb-1 flex items-center">
                       <FiMessageSquare className="mr-2" />
                       Your Message <span className="text-red-500 ml-1">*</span>
                     </label>

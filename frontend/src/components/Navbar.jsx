@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -10,6 +10,16 @@ import { motion } from "framer-motion"
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [hoveredLink, setHoveredLink] = useState(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [userRole, setUserRole] = useState(null)
+
+  useEffect(() => {
+    // Check authentication status
+    const token = localStorage.getItem('token')
+    const role = localStorage.getItem('role')
+    setIsAuthenticated(!!token)
+    setUserRole(role)
+  }, [])
 
   const navLinks = [
     { href: "/", label: "HOME" },
@@ -18,6 +28,36 @@ const Navbar = () => {
     { href: "#", label: "GALLERY" },
     { href: "/contactus", label: "CONTACT US" },
   ]
+
+  const getAuthButton = () => {
+    if (!isAuthenticated) {
+      return (
+        <Link href="/login">
+          <Button className="bg-white text-emerald-600 hover:bg-emerald-100 font-semibold rounded-full shadow-lg px-6 py-2 transition-all duration-300 hover:shadow-emerald-400/30">
+            LOGIN
+          </Button>
+        </Link>
+      )
+    }
+
+    if (userRole === 'admin') {
+      return (
+        <Link href="/admin/dashboard">
+          <Button className="bg-white text-emerald-600 hover:bg-emerald-100 font-semibold rounded-full shadow-lg px-6 py-2 transition-all duration-300 hover:shadow-emerald-400/30">
+            DASHBOARD
+          </Button>
+        </Link>
+      )
+    }
+
+    return (
+      <Link href="/user/profile">
+        <Button className="bg-white text-emerald-600 hover:bg-emerald-100 font-semibold rounded-full shadow-lg px-6 py-2 transition-all duration-300 hover:shadow-emerald-400/30">
+          PROFILE
+        </Button>
+      </Link>
+    )
+  }
 
   return (
     <header className="sticky top-0 z-50 bg-gradient-to-r from-emerald-600 to-emerald-900 shadow-xl backdrop-blur-sm border-b border-emerald-500/20">
@@ -79,14 +119,7 @@ const Navbar = () => {
                 ))}
               </nav>
               <div className="mt-auto p-4 border-t border-emerald-700/30">
-                <Link href="/login" className="w-full">
-                  <Button 
-                    className="w-full bg-white text-emerald-600 hover:bg-emerald-100 font-semibold rounded-full shadow-lg transition-all duration-300 hover:shadow-emerald-400/30"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    LOGIN
-                  </Button>
-                </Link>
+                {getAuthButton()}
               </div>
             </div>
           </SheetContent>
@@ -123,17 +156,13 @@ const Navbar = () => {
           ))}
         </nav>
 
-        {/* Login Button - Desktop */}
+        {/* Auth Button - Desktop */}
         <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="hidden md:block"
         >
-          <Link href="/login">
-            <Button className="bg-white text-emerald-600 hover:bg-emerald-100 font-semibold rounded-full shadow-lg px-6 py-2 transition-all duration-300 hover:shadow-emerald-400/30">
-              LOGIN
-            </Button>
-          </Link>
+          {getAuthButton()}
         </motion.div>
       </div>
     </header>

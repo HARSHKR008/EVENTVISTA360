@@ -196,19 +196,8 @@ const HeroSection = () => {
                         </div>
                     </div>
                     <div className="w-full md:w-1/2 relative animate-slide-in-right order-1 md:order-2 mb-8 md:mb-0">
-                        <div className="w-full h-64 md:h-[85vh] clip-hex-mobile md:clip-hex overflow-hidden transition-all duration-500 hover:scale-105 mx-auto">
-                            <img src="/pic2.png" alt="Decor" className="object-cover w-full h-full" />
-                            <div className="absolute -bottom-5 -right-5 md:-bottom-10 md:-right-10 bg-white p-4 md:p-6 shadow-xl rounded-lg w-48 md:w-64 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-                                <div className="flex items-center mb-2">
-                                    <div className="w-8 h-8 md:w-10 md:h-10 bg-amber-100 rounded-full flex items-center justify-center mr-2 md:mr-3">
-                                        <svg className="w-4 h-4 md:w-6 md:h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                    </div>
-                                    <h4 className="font-bold text-sm md:text-base">15 Years</h4>
-                                </div>
-                                <p className="text-xs md:text-sm text-gray-600">Of creating magical events and lasting memories.</p>
-                            </div>
+                        <div className="w-full h-64 md:h-[85vh] overflow-hidden transition-all duration-500 hover:scale-105 mx-auto">
+                            <img src="/pic2.png" alt="Decor" className="w-full h-full" />
                         </div>
                     </div>
                 </div>

@@ -47,8 +47,8 @@ router.post('/authenticate', (req, res) => {
         if (result) {
             // login success - generate token
 
-            const{ _id, name, email } = result;
-            const payload = { _id, name, email };
+            const{ _id, name, email, role } = result;
+            const payload = { _id, name, email, role };
 
             jwt.sign(
                 payload,
@@ -59,7 +59,7 @@ router.post('/authenticate', (req, res) => {
                         console.log(err);
                         res.status(500).json(err);
                     } else {
-                        res.status(200).json({token });
+                        res.status(200).json({token, role });
                     }
                 }
 

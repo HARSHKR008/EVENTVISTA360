@@ -1,9 +1,11 @@
 'use client';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const ContactSubmissionsAdmin = () => {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSubmission, setSelectedSubmission] = useState(null);
   const [updateLoading, setUpdateLoading] = useState(false);
@@ -11,19 +13,19 @@ const ContactSubmissionsAdmin = () => {
   useEffect(() => {
     const fetchSubmissions = async () => {
       try {
+        setError(null);
         const token = localStorage.getItem('token');
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact`, {
+        if (!token) {
+          throw new Error('Authentication token not found. Please log in again.');
+        }
+
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/contact/getall`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
         });
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch submissions');
-        }
-
-        const data = await response.json();
-        setSubmissions(data.data.map(submission => ({
+        setSubmissions(response.data.data.map(submission => ({
           id: submission._id,
           name: submission.name,
           email: submission.email,
@@ -33,6 +35,8 @@ const ContactSubmissionsAdmin = () => {
         })));
       } catch (error) {
         console.error('Error fetching submissions:', error);
+        setError(error.response?.data?.message || error.message || 'Failed to fetch submissions');
+        setSubmissions([]);
       } finally {
         setLoading(false);
       }
@@ -63,18 +67,16 @@ const ContactSubmissionsAdmin = () => {
     try {
       setUpdateLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact/${id}`, {
-        method: 'PATCH',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ status: newStatus })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to update status');
-      }
+      await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/contact/${id}`,
+        { status: newStatus },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
 
       // Update local state
       setSubmissions(submissions.map(sub => 
@@ -82,6 +84,8 @@ const ContactSubmissionsAdmin = () => {
       ));
     } catch (error) {
       console.error('Error updating status:', error);
+      // You might want to show an error message to the user here
+      alert(error.response?.data?.message || 'Failed to update status');
     } finally {
       setUpdateLoading(false);
     }
@@ -92,30 +96,59 @@ const ContactSubmissionsAdmin = () => {
       <div className="max-w-6xl mx-auto">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Contact Form Submissions</h1>
         
-        {/* Search bar */}
-        <div className="bg-white p-4 rounded-lg shadow mb-6">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search by name, email or message..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm('')}
-                className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
-              >
-                ✕
-              </button>
-            )}
+        {/* Search bar - only show if there are submissions */}
+        {!loading && !error && submissions.length > 0 && (
+          <div className="bg-white p-4 rounded-lg shadow mb-6">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search by name, email or message..."
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm('')}
+                  className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         {loading ? (
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+        ) : error ? (
+          <div className="bg-white p-8 rounded-lg shadow">
+            <div className="text-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-12 w-12 mx-auto text-red-500 mb-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
+              </svg>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">Error Loading Submissions</h3>
+              <p className="text-gray-500">{error}</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Try Again
+              </button>
+            </div>
           </div>
         ) : filteredSubmissions.length === 0 ? (
           <div className="bg-white p-8 rounded-lg shadow text-center">

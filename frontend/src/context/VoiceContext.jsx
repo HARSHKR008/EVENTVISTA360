@@ -73,11 +73,11 @@ const pageDetails = [
   },
   {
     pageName: 'contact',
-    pagePath: '/contact'
+    pagePath: '/contactus'
   },
   {
     pageName: 'about',
-    pagePath: '/about'
+    pagePath: '/aboutus'
   },
   {
     pageName: 'resetPassword',
@@ -92,20 +92,12 @@ const pageDetails = [
     pagePath: '/seller/sellerdashboard'
   },
   {
-    pageName: 'addProduct',
-    pagePath: '/seller/addProduct'
-  },
-  {
-    pageName: 'manageProduct',
-    pagePath: '/seller/manageProduct'
-  },
-  {
     pageName: 'sellersignup',
     pagePath: '/seller/sellersignup'
   },
   {
     pageName: 'admindashboard',
-    pagePath: '/admin/admindashboard'
+    pagePath: '/admin/dashboard'
   },
   {
     pageName: 'manageuser',
@@ -120,8 +112,8 @@ const pageDetails = [
     pagePath: '/user/profile'
   },
   {
-    pageName: 'MyCart',
-    pagePath: '/admin/adminprofile'
+    pageName: 'AdminProfile',
+    pagePath: '/admin/profile'
   },
   {
     pageName: 'cheakout',
@@ -129,7 +121,7 @@ const pageDetails = [
   },
 ]
 
-const speech = new SpeechSynthesisUtterance();
+const speech = typeof window !== 'undefined' ? new SpeechSynthesisUtterance() : null;
 const VoiceContext = createContext();
 
 export const VoiceProvider = ({ children }) => {
@@ -161,10 +153,10 @@ export const VoiceProvider = ({ children }) => {
 
   const commands = [
     {
-      command: 'Open :pageName page',
+      command: 'Open Home page',
       callback: (pageName) => {
         console.log('Opening page: ', pageName);
-        voicePageNavigator(pageName)
+        voicePageNavigator('home')
       }
     },
     {
@@ -216,7 +208,7 @@ export const VoiceProvider = ({ children }) => {
         voicePageNavigator('cheakout')
       }
     },
-    
+
     {
       command: 'open contact page',
       callback: (pageName) => {
@@ -447,11 +439,13 @@ export const VoiceProvider = ({ children }) => {
       router.push('/productView');
     }
   }, [finalTranscript])
-  
+
   const voiceResponse = (text) => {
-    speech.text = text;
-    window.speechSynthesis.speak(speech);
-  }
+    if (typeof window !== 'undefined' && speech) {
+      speech.text = text;
+      window.speechSynthesis.speak(speech);
+    }
+  };
 
   const interpretVoiceCommand = () => {
     // const last = event.results.length - 1;
@@ -488,6 +482,8 @@ export const VoiceProvider = ({ children }) => {
 
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const synth = window.speechSynthesis;
     if ("onvoiceschanged" in synth) {
       setVoices(voices);
@@ -497,11 +493,15 @@ export const VoiceProvider = ({ children }) => {
   }, [])
 
   const loadVoices = () => {
+    if (typeof window === 'undefined') return;
+
     const synth = window.speechSynthesis;
     const voices = synth.getVoices();
     setVoices(voices);
     console.log(voices);
-    speech.voice = voices[5];
+    if (speech) {
+      speech.voice = voices[5];
+    }
   }
 
   const checkExistenceInTranscript = (commandArray) => {
@@ -524,7 +524,7 @@ export const VoiceProvider = ({ children }) => {
     }}>
 
       <div className='fixed bottom-6 right-6 flex flex-col items-end gap-2 z-50'>
-        <button 
+        <button
           className='w-12 h-12 rounded-full bg-[#8C52FF] text-white shadow-lg hover:bg-[#7340d3] transition-all duration-200 flex items-center justify-center'
           onClick={() => {
             if (listening) {
@@ -540,7 +540,7 @@ export const VoiceProvider = ({ children }) => {
             <FaMicrophone size={20} />
           )}
         </button>
-        
+
         {/* Transcript display */}
         {listening && transcript && (
           <div className='bg-[#8C52FF]/90 text-white px-4 py-2 rounded-lg max-w-xs text-sm backdrop-blur-sm'>

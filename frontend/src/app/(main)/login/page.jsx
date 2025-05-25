@@ -5,8 +5,11 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
+    const router = useRouter();
+
     // Define validation schema with Yup
     const validationSchema = Yup.object({
         email: Yup.string()
@@ -29,13 +32,29 @@ const Login = () => {
 
             axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/authenticate`, values)
                 .then((result) => {
+                    const { token, role } = result.data;
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('role', role);
+
                     resetForm();
                     toast.success('Login successful!');
-                    localStorage.setItem('token', result.data.token);
+
+                    // Redirect based on role
+                    switch (role) {
+                        case 'admin':
+                            router.push('/admin/dashboard');
+                            break;
+                        case 'user':
+                            router.push('/user/profile');
+                            break;
+                        default:
+                            router.push('/');
+                            break;
+                    }
                 }).catch((err) => {
                     setSubmitting(false);
                     console.log(err);
-                    toast.error('Login failed!');
+                    toast.error(err.response?.data?.message || 'Login failed!');
                 });
         }
     });
