@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const ContactSubmission = require('../models/contactSubmission');
-const { protectRoute, isAdmin } = require('../middleware/authMiddleware');
+const ContactSubmission = require('../models/contactusmodel');
+// const { protectRoute, isAdmin } = require('../');
 
 // Create a new contact submission
-router.post('/', async (req, res) => {
+router.post('/add', async (req, res) => {
     try {
         const { name, email, message } = req.body;
 
@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
 });
 
 // Get all contact submissions (admin only)
-router.get('/', protectRoute, isAdmin, async (req, res) => {
+router.get('/getall', async (req, res) => {
     try {
         const submissions = await ContactSubmission.find()
             .sort({ date: -1 }); // Sort by date descending
@@ -57,7 +57,7 @@ router.get('/', protectRoute, isAdmin, async (req, res) => {
 });
 
 // Update submission status (admin only)
-router.patch('/:id', protectRoute, isAdmin, async (req, res) => {
+router.patch('/:id', async (req, res) => {
     try {
         const { status } = req.body;
         const validStatuses = ['new', 'in-progress', 'resolved'];
@@ -96,7 +96,7 @@ router.patch('/:id', protectRoute, isAdmin, async (req, res) => {
 });
 
 // Delete a submission (admin only)
-router.delete('/:id', protectRoute, isAdmin, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const submission = await ContactSubmission.findByIdAndDelete(req.params.id);
 

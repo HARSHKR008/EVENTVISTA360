@@ -10,12 +10,13 @@ const port = process.env.PORT || 5000;
 
 //middleware
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: '*',
 }));
 app.use(express.json());
 app.use('/user', UserRouter);
 app.use('/venue', VenueRouter);
 app.use('/feed', FeedRouter);
+app.use('/contact', require('./routers/contactusrouter.js'));
 
 // endpoint or route
 

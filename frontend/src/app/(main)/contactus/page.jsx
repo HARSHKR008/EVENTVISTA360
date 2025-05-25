@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiSend, FiCheck, FiX, FiMail, FiUser, FiMessageSquare } from 'react-icons/fi';
+import axios from 'axios';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -23,19 +24,13 @@ const ContactPage = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contact`, {
-        method: 'POST',
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/contact/add`, formData, {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
-        body: JSON.stringify(formData),
+        withCredentials: true,
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to submit');
-      }
+      console.log('Response:', response.data);
 
       setSubmitStatus('success');
       setFormData({ name: '', email: '', message: '' });

@@ -37,6 +37,7 @@ const contactSubmissionSchema = new mongoose.Schema({
     adminNotes: {
         type: String,
         trim: true,
+        default: '',
         maxLength: [500, 'Admin notes cannot exceed 500 characters']
     },
     lastUpdated: {
