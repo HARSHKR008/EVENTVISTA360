@@ -1,12 +1,13 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 
-const ThreeDViewer = ({ images, frameCount = 19 }) => {
+const ThreeDViewer = ({ images }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [currentFrame, setCurrentFrame] = useState(0);
   const [startX, setStartX] = useState(0);
   const [direction, setDirection] = useState(0);
   const containerRef = useRef(null);
+  const frameCount = images.length; // Use actual number of images
 
   const handleMouseDown = (e) => {
     setIsDragging(true);

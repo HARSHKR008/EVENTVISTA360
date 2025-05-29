@@ -31,7 +31,7 @@ const Viewer3D = () => {
 
   return (
     <div>
-        <ThreeDViewer images={images} frameCount={29} />
+        <ThreeDViewer images={images} frameCount={72} />
     </div>
   );
 };

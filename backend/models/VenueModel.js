@@ -39,10 +39,8 @@ const venueSchema = new Schema({
     category: {
         type: String,
         required: true,
-    },
-    images360: [{
+    },    images360: [{
         type: String,
-        required: true,
     }],
     model360: [{
         name: String,

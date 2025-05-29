@@ -31,7 +31,6 @@ const VenueForm = () => {
       if (!values.capacity) errors.capacity = 'Capacity is required';
       if (!values.category) errors.category = 'Category is required';
       if (normalImages.length === 0) errors.normalImages = 'At least one normal image is required';
-      if (images360.length === 0) errors.images360 = 'At least one 360° image is required';
       // Add validation for modelname if model images exist
       if (modelImages.length > 0 && !values.modelname) {
         errors.modelname = 'Model name is required when adding model images';
@@ -45,21 +44,17 @@ const VenueForm = () => {
         toast.error('Please upload at least one normal image');
         return;
       }
-      if (images360.length === 0) {
-        toast.error('Please upload at least one 360° image');
-        return;
-      }
 
       const formData = {
         name: values.name,
         description: values.description,
         location: values.location,
-        capacity: parseInt(values.capacity, 10), // Convert string to number
+        capacity: parseInt(values.capacity, 10),
         category: values.category,
         imgurl: normalImages,
-        images360: images360,
+        images360: images360,  // This can now be empty
         model360: modelImages.length > 0 ? [{
-          name: values.modelname || 'Default Model',
+          name: values.modelname,
           description: values.description,
           images360: modelImages
         }] : []
@@ -83,36 +78,56 @@ const VenueForm = () => {
 
   const uploadImages = async (e, type) => {
     const files = Array.from(e.target.files);
+    console.log(`Attempting to upload ${files.length} files of type ${type}`);
+    
+    if (files.length === 0) {
+      toast.error('Please select at least one file to upload');
+      return;
+    }
+
     setUploading(true);
 
     try {
+      // Process all files without a fixed batch size limit for 360° images
       const uploadPromises = files.map(file => {
         const fd = new FormData();
         fd.append('file', file);
         fd.append('upload_preset', 'event360');
         fd.append('cloud_name', 'dxanhgmd8');
 
-        return axios.post('https://api.cloudinary.com/v1_1/dxanhgmd8/image/upload', fd);
+        return axios.post('https://api.cloudinary.com/v1_1/dxanhgmd8/image/upload', fd)
+          .then(response => response.data.url)
+          .catch(error => {
+            console.error('Error uploading file:', error);
+            toast.error(`Failed to upload ${file.name}`);
+            return null;
+          });
       });
 
-      const responses = await Promise.all(uploadPromises);
-      const newUrls = responses.map(response => response.data.url);
+      const results = await Promise.all(uploadPromises);
+      const successfulUploads = results.filter(url => url !== null);
       
-      switch(type) {
-        case 'normal':
-          setNormalImages(prev => [...prev, ...newUrls]);
-          break;
-        case '360':
-          setImages360(prev => [...prev, ...newUrls]);
-          break;
-        case 'model':
-          setModelImages(prev => [...prev, ...newUrls]);
-          break;
+      if (successfulUploads.length > 0) {
+        // Update the UI with all uploaded images
+        switch(type) {
+          case 'normal':
+            setNormalImages(prev => [...prev, ...successfulUploads]);
+            break;
+          case '360':
+            setImages360(prev => [...prev, ...successfulUploads]);
+            break;
+          case 'model':
+            setModelImages(prev => [...prev, ...successfulUploads]);
+            break;
+        }
+        
+        toast.success(`Successfully uploaded ${successfulUploads.length} files!`);
+      } else {
+        toast.error('No files were uploaded successfully');
       }
-      toast.success('Files uploaded successfully');
     } catch (err) {
-      console.log(err);
-      toast.error('Failed to upload files');
+      console.error('Upload process error:', err);
+      toast.error('Upload process failed. Please try again.');
     } finally {
       setUploading(false);
     }

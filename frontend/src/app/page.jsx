@@ -143,7 +143,7 @@ const HeroSection = () => {
         BROWSE EVENTS
       </Link>
       <Link
-        href="/contactus"
+         href="/contactus"
         className="inline-block bg-transparent text-amber-100 font-semibold py-3 px-8 rounded border border-amber-100 hover:bg-amber-100/10 transition-all duration-300 hover:scale-105 hover:shadow-md text-center"
       >
         GET A QUOTE
