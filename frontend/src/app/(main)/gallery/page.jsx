@@ -15,34 +15,66 @@ const Gallery360 = () => {
     {
       id: 1,
       type: 'photo',
-      title: 'Concert Venue 360°',
-      thumbnail: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8MzgwJTIwZGVncmVlfGVufDB8fDB8fHww',
-      src: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8MzgwJTIwcGhvdG98ZW58MHx8MHx8fDA%3D',
+      title: 'Wedding Venue 360°',
+      thumbnail: '/images/WEDDINGSAMPLE.jpg',
+      src: '/images/p1.jpg',
       frames: 36
     },
     {
       id: 2,
+      type: 'photo',
+      title: 'Engagement Hall 360°',
+      thumbnail: '/images/ENGAGEMESAMPLE.jpg',
+      src: '/images/p2.jpg',
+      frames: 36
+    },
+    {
+      id: 3,
+      type: 'photo',
+      title: 'Haldi Ceremony Space',
+      thumbnail: '/images/HALDI SAMPLE.jpg',
+      src: '/images/p3.jpg',
+      frames: 36
+    },
+    {
+      id: 4,
+      type: 'photo',
+      title: 'Get Together Venue',
+      thumbnail: '/images/GETTOGETHERSAMPLE.jpg',
+      src: 'hero.jpg',
+      frames: 36
+    },
+    {
+      id: 5,
+      type: 'photo',
+      title: 'Banquet Hall Panorama',
+      thumbnail: '/images/pan1.jpg',
+      src: '/3dimages/5.webp',
+      frames: 36
+    },
+    {
+      id: 6,
+      type: 'photo',
+      title: 'Garden View 360°',
+      thumbnail: '/images/bg-9.jpg',
+      src: '/3dimages/6.webp',
+      frames: 36
+    },
+    {
+      id: 7,
       type: 'youtube',
-      title: '360° Concert Experience',
+      title: '360° Wedding Experience',
       thumbnail: 'https://i.ytimg.com/vi/f2vpuTU7sio/hqdefault.jpg',
       videoId: 'f2vpuTU7sio',
       isMoving: true
     },
     {
-      id: 3,
+      id: 8,
       type: 'photo',
-      title: 'VIP Lounge 360°',
-      thumbnail: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8MzgwJTIwcGhvdG98ZW58MHx8MHx8fDA%3D',
-      src: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fDM4MCUyMHBob3RvfGVufDB8fDB8fHww',
-      frames: 24
-    },
-    {
-      id: 4,
-      type: 'youtube',
-      title: 'Festival 360° Experience',
-      thumbnail: 'https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault.jpg',
-      videoId: '5qap5aO4i9A',
-      isMoving: true
+      title: 'Reception Area 360°',
+      thumbnail: '/images/bg-4.jpg',
+      src: '/3dimages/7.webp',
+      frames: 36
     }
   ];
 
@@ -178,7 +210,11 @@ const Gallery360 = () => {
             
             <div
               ref={viewerRef}
-              className={`relative mx-auto bg-black rounded-xl overflow-hidden ${isFullscreen ? 'fixed inset-0 z-50' : 'max-w-4xl h-96'}`}
+              className={`relative mx-auto bg-black rounded-xl overflow-hidden ${
+                isFullscreen 
+                  ? 'fixed inset-0 z-50 flex items-center justify-center' 
+                  : 'max-w-6xl h-[600px]'
+              }`}
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUp}
@@ -191,11 +227,16 @@ const Gallery360 = () => {
                 <img
                   src={activeMedia.src}
                   alt={activeMedia.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                   style={{
                     transform: `rotateY(${rotationY}deg)`,
-                    transition: isDragging ? 'none' : 'transform 0.3s ease'
+                    transition: isDragging ? 'none' : 'transform 0.3s ease',
+                    maxHeight: '100vh',
+                    objectFit: 'contain',
+                    imageRendering: 'high-quality'
                   }}
+                  loading="eager"
+                  fetchPriority="high"
                 />
               ) : activeMedia.type === 'youtube' ? (
                 <div className="relative w-full h-full">
@@ -352,28 +393,16 @@ const Gallery360 = () => {
                 </button>
               </div>
 
-              {/* Rotation indicator for photos */}
-              {activeMedia.type === 'photo' && (
-                <div className="absolute bottom-4 left-4 right-4 bg-white bg-opacity-10 rounded-full h-2 backdrop-blur-sm">
-                  <div
-                    className="bg-blue-500 h-2 rounded-full"
-                    style={{
-                      width: `${(rotationY / 360) * 100}%`,
-                      transition: isDragging ? 'none' : 'width 0.1s linear'
-                    }}
-                  />
-                </div>
-              )}
             </div>
 
             {/* Instructions */}
-            <div className="mt-4 text-center text-gray-300">
+            {/* <div className="mt-4 text-center text-gray-300">
               {activeMedia.type === 'photo' ? (
                 <p>Click and drag horizontally to rotate the 360° view</p>
               ) : (
                 <p>{isPlaying ? 'Drag to rotate the 360° view' : 'Click play to start the 360° video'}</p>
               )}
-            </div>
+            </div> */}
           </div>
         )}
       </div>
