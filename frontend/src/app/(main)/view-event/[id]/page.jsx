@@ -127,6 +127,31 @@ const EventDetails = () => {
               {/* <Viewer3D /> */}
             </div>
           )}
+
+          {/* Model Images Section */}
+          {event.model360 && event.model360.length > 0 && event.model360[0].images360.length > 0 && (
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-gray-800 mb-4">3D Model Images</h2>
+              <p className="text-lg text-gray-600 mb-4">Model Name: {event.model360[0].name}</p>
+              <p className="text-gray-600 mb-6">{event.model360[0].description}</p>
+
+              {/* Grid for model images */}
+              <div className="grid gap-8 md:grid-cols-3 mb-10">
+                {event.model360[0].images360.map((url, idx) => (
+                  <div
+                    key={idx}
+                    className="overflow-hidden rounded-3xl shadow-lg transform hover:scale-105 transition duration-300"
+                  >
+                    <img
+                      src={url}
+                      alt={`Model View ${idx + 1}`}
+                      className="object-cover w-full h-60"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

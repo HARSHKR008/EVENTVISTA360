@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import ThreeDViewer from '@/components/ThreeDViewer';
 
 const Browse = () => {
   const [events, setEvents] = useState([]);
@@ -71,12 +72,22 @@ const Browse = () => {
               <Link href={`/view-event/${event._id}`}>
                 {/* Event Image */}
                 <div className="relative h-60 overflow-hidden">
-                  {event.imgurl[0] ? (
-                    <img
-                      src={event.imgurl[0]}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      alt={event.name}
-                    />
+                  {event.imgurl && event.imgurl.length > 0 ? (
+                    event.model360 && event.model360.length > 0 ? (
+                      <ThreeDViewer images={event.model360[0].images360} />
+                    ) : event.imgurl.length > 1 ? (
+                      <img
+                        src={event.imgurl[0]}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        alt={event.name}
+                      />
+                    ) : (
+                      <img
+                        src={event.imgurl[0]}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        alt={event.name}
+                      />
+                    )
                   ) : (
                     <div className="w-full h-full bg-gray-100 flex items-center justify-center">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">

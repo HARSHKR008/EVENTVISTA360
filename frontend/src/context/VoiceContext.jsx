@@ -367,12 +367,9 @@ export const VoiceProvider = ({ children }) => {
       triggerModal('Voice Assistant', 'I am listening');
     }
   }, [])
-
-  // open instruction modal after 3 seconds
+  // instruction modal is now controlled manually
   useEffect(() => {
-    setTimeout(() => {
-      setShowInstruction(true);
-    }, 3000);
+    setShowInstruction(false);
   }, [])
 
 
