@@ -42,9 +42,9 @@ const Navbar = () => {
 
     if (userRole === 'admin') {
       return (
-        <Link href="/admin/dashboard">
+        <Link href="/login">
           <Button className="bg-white text-emerald-600 hover:bg-emerald-100 font-semibold rounded-full shadow-lg px-6 py-2 transition-all duration-300 hover:shadow-emerald-400/30">
-            DASHBOARD
+            Login
           </Button>
         </Link>
       )

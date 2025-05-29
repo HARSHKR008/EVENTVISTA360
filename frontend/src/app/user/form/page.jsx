@@ -8,48 +8,76 @@ const VenueForm = () => {
   const [normalImages, setNormalImages] = useState([]);
   const [images360, setImages360] = useState([]);
   const [modelImages, setModelImages] = useState([]);
-  const [uploading, setUploading] = useState(false); // Add this line
+  const [uploading, setUploading] = useState(false);
 
   const venuseForm = useFormik({
     initialValues: {
       name: '',
       description: '',
       location: '',
-      capacity: 0,
+      capacity: '',
       category: '',
       modelname: '',
       normalImages: [],
       images360: [],
       model360: []
     },
+    validate: (values) => {
+      const errors = {};
+      
+      if (!values.name) errors.name = 'Venue name is required';
+      if (!values.description) errors.description = 'Description is required';
+      if (!values.location) errors.location = 'Location is required';
+      if (!values.capacity) errors.capacity = 'Capacity is required';
+      if (!values.category) errors.category = 'Category is required';
+      if (normalImages.length === 0) errors.normalImages = 'At least one normal image is required';
+      if (images360.length === 0) errors.images360 = 'At least one 360° image is required';
+      // Add validation for modelname if model images exist
+      if (modelImages.length > 0 && !values.modelname) {
+        errors.modelname = 'Model name is required when adding model images';
+      }
+      
+      return errors;
+    },
     onSubmit: (values, {resetForm}) => {
+      // Check if any images are uploaded
+      if (normalImages.length === 0) {
+        toast.error('Please upload at least one normal image');
+        return;
+      }
+      if (images360.length === 0) {
+        toast.error('Please upload at least one 360° image');
+        return;
+      }
+
       const formData = {
         name: values.name,
         description: values.description,
         location: values.location,
-        capacity: values.capacity,
+        capacity: parseInt(values.capacity, 10), // Convert string to number
         category: values.category,
         imgurl: normalImages,
         images360: images360,
-        model360: [{
-          name: values.modelname,
+        model360: modelImages.length > 0 ? [{
+          name: values.modelname || 'Default Model',
           description: values.description,
           images360: modelImages
-        }]
+        }] : []
       };
       
       axios.post(`${process.env.NEXT_PUBLIC_API_URL}/venue/add`, formData)
-      .then((result) => {
-        console.log(result.data);
-        toast.success('Venue added successfully');
-        resetForm();
-        setNormalImages([]);
-        setImages360([]);
-        setModelImages([]);
-      }).catch((err) => {
-        console.log(err);
-        toast.error('Failed to add venue');
-      });
+        .then((result) => {
+          console.log(result.data);
+          toast.success('Venue added successfully');
+          resetForm();
+          setNormalImages([]);
+          setImages360([]);
+          setModelImages([]);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error(err.response?.data?.message || 'Failed to add venue');
+        });
     }
   });
 
@@ -133,9 +161,7 @@ const VenueForm = () => {
                 onChange={venuseForm.handleChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               />
-            </div>
-
-            <div>
+            </div>            <div>
               <label htmlFor="location" className="block text-sm font-medium text-gray-700">Address</label>
               <input
                 type="text"
@@ -144,9 +170,20 @@ const VenueForm = () => {
                 value={venuseForm.values.location}
                 onChange={venuseForm.handleChange}
                 className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="capacity" className="block text-sm font-medium text-gray-700">Capacity</label>
+              <input
+                type="number"
+                id="capacity"
+                name="capacity"
+                value={venuseForm.values.capacity}
+                onChange={venuseForm.handleChange}
+                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 min="1"
               />
-
             </div>
 
             <div>
@@ -266,6 +303,20 @@ const VenueForm = () => {
                 onChange={venuseForm.handleChange}
                 className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               />
+            </div>
+            <div>
+              <label htmlFor="modelname" className="block text-sm font-medium text-gray-700">Model Name</label>
+              <input
+                type="text"
+                id="modelname"
+                name="modelname"
+                value={venuseForm.values.modelname}
+                onChange={venuseForm.handleChange}
+                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              />
+              {modelImages.length > 0 && !venuseForm.values.modelname && (
+                <p className="mt-1 text-sm text-red-600">Model name is required when adding model images</p>
+              )}
             </div>
 
             <div className="flex justify-end">

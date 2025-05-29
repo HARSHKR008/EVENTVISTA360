@@ -44,7 +44,11 @@ const venueSchema = new Schema({
         type: String,
         required: true,
     }],
-    model360: [modelSchema],
+    model360: [{
+        name: String,
+        description: String,
+        images360: [String]
+    }],
     createdAt: {
         type: Date,
         default: Date.now,

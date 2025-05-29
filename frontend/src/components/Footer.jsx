@@ -52,7 +52,7 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-semibold text-gray-900 mb-6">Our Services</h3>
             <ul className="space-y-4">
-              {['Wedding Planning', 'Corporate Events', 'Birthday Parties', 'Themed Events', 'Venue Selection', 'Catering'].map((service) => (
+              {['Wedding Planning', 'Corporate Events', 'Birthday Parties', 'Themed Events', 'Venue Selection', 'Product Launch'].map((service) => (
                 <li key={service}>
                   <Link 
                     href="#" 
@@ -71,18 +71,18 @@ const Footer = () => {
             <address className="not-italic text-gray-600 space-y-4 text-lg">
               <div className="flex items-start">
                 <i className="fas fa-map-marker-alt mt-1 mr-3 text-amber-500" />
-                <span>123 Event Street, Suite 456<br />New York, NY 10001</span>
+                <span>J 49 South City<br />RBL, LUCKNOW,226025</span>
               </div>
               <div className="flex items-center">
                 <i className="fas fa-phone-alt mr-3 text-amber-500" />
                 <Link href="tel:+11234567890" className="hover:text-amber-500 transition-colors duration-300">
-                  +1 (123) 456-7890
+                  +91 9554440027
                 </Link>
               </div>
               <div className="flex items-center">
                 <i className="fas fa-envelope mr-3 text-amber-500" />
                 <Link href="mailto:info@eventvista360.com" className="hover:text-amber-500 transition-colors duration-300">
-                  info@eventvista360.com
+                  i.harshk0008@gmail.com
                 </Link>
               </div>
             </address>
