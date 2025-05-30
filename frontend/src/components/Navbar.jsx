@@ -21,6 +21,13 @@ const Navbar = () => {
     setUserRole(role)
   }, [])
 
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('role')
+    setIsAuthenticated(false)
+    setUserRole(null)
+  }
+
   const navLinks = [
     { href: "/", label: "HOME" },
     { href: "/aboutus", label: "ABOUT US" },
@@ -40,22 +47,28 @@ const Navbar = () => {
       )
     }
 
-    if (userRole === 'admin') {
-      return (
-        <Link href="/admin/dashboard">
-          <Button className="bg-white text-emerald-600 hover:bg-emerald-100 font-semibold rounded-full shadow-lg px-6 py-2 transition-all duration-300 hover:shadow-emerald-400/30">
-            DASHBOARD
-          </Button>
-        </Link>
-      )
-    }
-
     return (
-      <Link href="/user/profile">
-        <Button className="bg-white text-emerald-600 hover:bg-emerald-100 font-semibold rounded-full shadow-lg px-6 py-2 transition-all duration-300 hover:shadow-emerald-400/30">
-          PROFILE
+      <div className="flex gap-2">
+        {userRole === 'admin' ? (
+          <Link href="/admin/dashboard">
+            <Button className="bg-white text-emerald-600 hover:bg-emerald-100 font-semibold rounded-full shadow-lg px-6 py-2 transition-all duration-300 hover:shadow-emerald-400/30">
+              DASHBOARD
+            </Button>
+          </Link>
+        ) : (
+          <Link href="/user/profile">
+            <Button className="bg-white text-emerald-600 hover:bg-emerald-100 font-semibold rounded-full shadow-lg px-6 py-2 transition-all duration-300 hover:shadow-emerald-400/30">
+              PROFILE
+            </Button>
+          </Link>
+        )}
+        <Button 
+          onClick={handleLogout}
+          className="bg-red-500 text-white hover:bg-red-600 font-semibold rounded-full shadow-lg px-6 py-2 transition-all duration-300 hover:shadow-red-400/30"
+        >
+          LOGOUT
         </Button>
-      </Link>
+      </div>
     )
   }
 
