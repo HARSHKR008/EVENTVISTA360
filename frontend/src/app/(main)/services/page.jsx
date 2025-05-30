@@ -11,9 +11,7 @@ const Services = () => {
           <p className="text-xl md:text-2xl mb-8 animate-fadeIn delay-100">
             Making Your Events Memorable and Extraordinary
           </p>
-          <button className="bg-white text-indigo-600 px-8 py-3 rounded-full font-semibold hover:bg-indigo-50 transition duration-300 transform hover:scale-105 animate-fadeIn delay-200">
-            Get a Quote
-          </button>
+         
         </div>
       </section>
 
@@ -58,12 +56,17 @@ const Services = () => {
           <h3 className="text-2xl md:text-3xl font-bold mb-4">Ready to plan your next event?</h3>
           <p className="mb-8 max-w-2xl mx-auto">Let's create something amazing together</p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button className="bg-white text-indigo-600 px-8 py-3 rounded-full font-semibold hover:bg-indigo-50 transition duration-300">
-              Contact Us
-            </button>
-            <button className="bg-transparent border-2 border-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-indigo-600 transition duration-300">
-              View Portfolio
-            </button>
+           
+
+
+        <a href="/contactus"
+          className="bg-white text-indigo-600 px-8 py-3 rounded-full font-semibold hover:bg-indigo-50 transition duration-300">
+            Contact Us
+        </a>
+           <a href="/browse"
+              className="bg-transparent border-2 border-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-indigo-600 transition duration-300">
+             View Portfolio
+            </a>
           </div>
         </div>
       </section>

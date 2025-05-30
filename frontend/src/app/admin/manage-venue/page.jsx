@@ -111,13 +111,12 @@ const ManageVenue = () => {
                                                     {formatDate(venue.createdAt)}
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <div className="flex justify-end gap-2">
-                                                        <Link
-                                                            href={`/admin/venues/edit/${venue._id}`}
-                                                            className="text-blue-600 hover:text-blue-900 p-2 rounded hover:bg-blue-50"
-                                                        >
-                                                            <FiEdit className="h-5 w-5" />
-                                                        </Link>
+                                                    <div className="flex justify-end gap-2">                                        <Link
+                                            href={`/admin/venues/edit/${venue._id}`}
+                                            className="text-blue-600 hover:text-blue-900 p-2 rounded hover:bg-blue-50"
+                                        >
+                                            <FiEdit className="h-5 w-5" />
+                                        </Link>
                                                         <button
                                                             onClick={() => deleteVenue(venue._id)}
                                                             disabled={deleteLoading === venue._id}

@@ -143,7 +143,7 @@ const HeroSection = () => {
         BROWSE EVENTS
       </Link>
       <Link
-        href="/contact"
+         href="/contactus"
         className="inline-block bg-transparent text-amber-100 font-semibold py-3 px-8 rounded border border-amber-100 hover:bg-amber-100/10 transition-all duration-300 hover:scale-105 hover:shadow-md text-center"
       >
         GET A QUOTE
@@ -187,12 +187,12 @@ const HeroSection = () => {
                             ))}
                         </div>
                         <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
-                            <button className="bg-gray-800 text-white font-semibold py-3 px-8 rounded hover:bg-gray-700 transition-all duration-300 hover:scale-105 hover:shadow-md">
+                            {/* <button className="bg-gray-800 text-white font-semibold py-3 px-8 rounded hover:bg-gray-700 transition-all duration-300 hover:scale-105 hover:shadow-md">
                                 Our Services
                             </button>
                             <button className="bg-transparent text-gray-800 font-semibold py-3 px-8 rounded border border-gray-800 hover:bg-white/30 transition-all duration-300 hover:scale-105 hover:shadow-md">
                                 View Portfolio
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                     <div className="w-full md:w-1/2 relative animate-slide-in-right order-1 md:order-2 mb-8 md:mb-0">
@@ -204,133 +204,230 @@ const HeroSection = () => {
             </section>
 
             {/* Testimonials Section */}
-            <section className="py-12 md:py-20 bg-gray-100">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-8 md:mb-16 animate-fade-in">
-                        <span className="text-amber-600 font-semibold">CLIENT TESTIMONIALS</span>
-                        <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mt-2">What Our Clients Say</h3>
-                    </div>
-                    
-                    {/* Mobile Carousel */}
-                    {isMobile ? (
-                        <div 
-                            className="relative overflow-hidden"
-                            onTouchStart={handleTouchStart}
-                            onTouchMove={handleTouchMove}
-                            onTouchEnd={handleTouchEnd}
-                        >
-                            <div className="flex transition-transform duration-300" style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}>
-                                {testimonials.map((testimonial, index) => (
-                                    <div key={index} className="w-full flex-shrink-0 px-2">
-                                        <div className={`bg-white p-6 rounded-lg shadow-md ${activeTestimonial === index ? 'ring-2 ring-amber-400' : ''}`}>
-                                            <div className="flex items-center mb-4">
-                                                <div className="w-10 h-10 bg-amber-100 rounded-full mr-3 animate-pulse"></div>
-                                                <div>
-                                                    <h4 className="font-bold">{testimonial.name}</h4>
-                                                    <p className="text-sm text-gray-600">{testimonial.type}</p>
-                                                </div>
-                                            </div>
-                                            <p className="text-gray-700 mb-4">
-                                                "{testimonial.quote}"
-                                            </p>
-                                            <div className="flex text-amber-400">
-                                                {[...Array(testimonial.stars)].map((_, i) => (
-                                                    <svg key={i} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                    </svg>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="flex justify-center mt-4 space-x-2">
-                                {testimonials.map((_, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => setActiveTestimonial(index)}
-                                        className={`w-2 h-2 rounded-full ${activeTestimonial === index ? 'bg-amber-500' : 'bg-gray-300'}`}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                    ) : (
-                        /* Desktop Grid */
-                        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-                            {testimonials.map((testimonial, index) => (
-                                <div 
-                                    key={index}
-                                    className={`bg-white p-6 md:p-8 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 ${activeTestimonial === index ? 'ring-2 ring-amber-400' : ''}`}
-                                    onClick={() => setActiveTestimonial(index)}
-                                >
-                                    <div className="flex items-center mb-4">
-                                        <div className="w-10 h-10 bg-amber-100 rounded-full mr-3 animate-pulse"></div>
-                                        <div>
-                                            <h4 className="font-bold">{testimonial.name}</h4>
-                                            <p className="text-sm text-gray-600">{testimonial.type}</p>
-                                        </div>
-                                    </div>
-                                    <p className="text-gray-700 mb-4">
-                                        "{testimonial.quote}"
-                                    </p>
-                                    <div className="flex text-amber-400">
-                                        {[...Array(testimonial.stars)].map((_, i) => (
-                                            <svg key={i} className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </section>
+            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+  <div className="max-w-7xl mx-auto">
+    {/* Section Header - Editable */}
+    <div className="text-center mb-12">
+      <h2 className="text-3xl font-extrabold text-gray-900">
+        What Our Clients Say
+      </h2>
+      <p className="mt-4 text-lg text-gray-600">
+        Hear from people who've used our event platform
+      </p>
+    </div>
+
+    {/* Testimonials Grid - Fully Editable */}
+    <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {/* Testimonial 1 - Edit all content below */}
+      <div className="bg-white p-8 rounded-lg shadow-md">
+        <div className="flex items-center mb-4">
+          {/* Replace with your image (can be URL or path) */}
+          <img
+            className="h-12 w-12 rounded-full object-cover"
+            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            alt="Client Name"
+          />
+          <div className="ml-4">
+            {/* Edit name and title */}
+            <h3 className="font-medium text-gray-900">Alex Johnson</h3>
+            <p className="text-gray-500 text-sm">Marketing Director, TechCorp</p>
+          </div>
+        </div>
+        {/* Edit testimonial text */}
+        <p className="text-gray-600">
+          "This platform transformed our annual conference. The registration process was seamless and we saw a 40% increase in attendance compared to last year."
+        </p>
+        {/* Edit stars (remove or add svg elements) */}
+        <div className="mt-4 flex text-yellow-400">
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        </div>
+      </div>
+
+      {/* Testimonial 2 - Edit all content below */}
+      <div className="bg-white p-8 rounded-lg shadow-md">
+        <div className="flex items-center mb-4">
+          {/* Replace with your image */}
+          <img
+            className="h-12 w-12 rounded-full object-cover"
+            src="https://randomuser.me/api/portraits/men/32.jpg"
+            alt="Client Name"
+          />
+          <div className="ml-4">
+            {/* Edit name and title */}
+            <h3 className="font-medium text-gray-900">Aditya Jairaj</h3>
+            <p className="text-gray-500 text-sm">MD, JEEP India</p>
+          </div>
+        </div>
+        {/* Edit testimonial text */}
+        <p className="text-gray-600">
+          "The analytics dashboard provided incredible insights into our attendees. We've been able to tailor our events much better since we started using this platform."
+        </p>
+        {/* Edit stars */}
+        <div className="mt-4 flex text-yellow-400">
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        </div>
+      </div>
+
+      {/* Testimonial 3 - Edit all content below */}
+      <div className="bg-white p-8 rounded-lg shadow-md">
+        <div className="flex items-center mb-4">
+          {/* Replace with your image */}
+          <img
+            className="h-12 w-12 rounded-full object-cover"
+            src="https://randomuser.me/api/portraits/women/44.jpg"
+            alt="Client Name"
+          />
+          <div className="ml-4">
+            {/* Edit name and title */}
+            <h3 className="font-medium text-gray-900">David Kim</h3>
+            <p className="text-gray-500 text-sm">CEO, Startup Ventures</p>
+          </div>
+        </div>
+        {/* Edit testimonial text */}
+        <p className="text-gray-600">
+          "From setup to execution, everything was intuitive. Our hybrid event ran without a hitch and attendees loved the mobile app integration. Will definitely use again!"
+        </p>
+        {/* Edit stars */}
+        <div className="mt-4 flex text-yellow-400">
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    {/* Add more testimonials as needed by duplicating the above blocks */}
+  </div>
+</section>
 
             {/* Featured Events Section */}
-            <section className="py-12 md:py-20 bg-white">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-8 md:mb-16 animate-fade-in">
-                        <span className="text-amber-600 font-semibold">OUR PORTFOLIO</span>
-                        <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mt-2">Featured Events</h3>
-                        <p className="text-lg text-gray-600 mt-2 md:mt-4 max-w-2xl mx-auto">
-                            Explore some of our most memorable events that showcase our creativity and attention to detail.
-                        </p>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                        {eventTypes.map((event, index) => (
-                            <div 
-                                key={index}
-                                className="group relative overflow-hidden rounded-lg shadow-lg transition-all duration-500 hover:shadow-2xl"
-                                onMouseEnter={() => !isMobile && setHoveredEvent(index)}
-                                onMouseLeave={() => !isMobile && setHoveredEvent(null)}
-                                onClick={() => isMobile && setHoveredEvent(hoveredEvent === index ? null : index)}
-                            >
-                                <img 
-                                    src={event.image} 
-                                    alt={event.title} 
-                                    className={`w-full h-64 md:h-80 object-cover transition-all duration-500 ${hoveredEvent === index ? 'scale-110' : ''}`}
-                                />
-                                <div className={`absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4 md:p-6 ${isMobile && hoveredEvent === index ? 'bg-black/70' : ''}`}>
-                                    <span className="text-amber-300 font-medium transition-all duration-300 group-hover:text-amber-400">{event.type}</span>
-                                    <h4 className="text-xl md:text-2xl font-bold text-white mt-1 transition-all duration-300 group-hover:text-amber-100">{event.title}</h4>
-                                    <p className={`text-white/90 mt-2 transition-all duration-300 group-hover:text-white ${isMobile ? (hoveredEvent === index ? 'block' : 'hidden md:block') : 'block'}`}>
-                                        {event.description}
-                                    </p>
-                                    <button className="mt-4 self-start bg-amber-400 text-gray-900 font-semibold py-2 px-6 rounded hover:bg-amber-500 transition-all duration-300 transform hover:scale-105">
-                                        View Gallery
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    <div className="text-center mt-8 md:mt-12 animate-pulse">
-                        <button className="bg-gray-800 text-white font-semibold py-3 px-8 rounded hover:bg-gray-700 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                            View All Events
-                        </button>
-                    </div>
+{/* Featured Events Section */}
+<section className="py-12 md:py-20 bg-white">
+    <div className="container mx-auto px-4">
+        <div className="text-center mb-8 md:mb-16 animate-fade-in">
+            <span className="text-amber-600 font-semibold">OUR PORTFOLIO</span>
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mt-2">Featured Events</h3>
+            <p className="text-lg text-gray-600 mt-2 md:mt-4 max-w-2xl mx-auto">
+                Explore some of our most memorable events that showcase our creativity and attention to detail.
+            </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {/* Event 1 - Corporate Conference */}
+            <div 
+                className="group relative overflow-hidden rounded-lg shadow-lg transition-all duration-500 hover:shadow-2xl"
+                onMouseEnter={() => !isMobile && setHoveredEvent(0)}
+                onMouseLeave={() => !isMobile && setHoveredEvent(null)}
+                onClick={() => isMobile && setHoveredEvent(hoveredEvent === 0 ? null : 0)}
+            >
+                {/* Replace with your actual image */}
+                <img 
+                    src="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                    alt="Corporate Conference" 
+                    className={`w-full h-64 md:h-80 object-cover transition-all duration-500 ${hoveredEvent === 0 ? 'scale-110' : ''}`}
+                />
+                <div className={`absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4 md:p-6 ${isMobile && hoveredEvent === 0 ? 'bg-black/70' : ''}`}>
+                    <span className="text-amber-300 font-medium transition-all duration-300 group-hover:text-amber-400">Corporate</span>
+                    <h4 className="text-xl md:text-2xl font-bold text-white mt-1 transition-all duration-300 group-hover:text-amber-100">Tech Summit 2023</h4>
+                    <p className={`text-white/90 mt-2 transition-all duration-300 group-hover:text-white ${isMobile ? (hoveredEvent === 0 ? 'block' : 'hidden md:block') : 'block'}`}>
+                        Annual technology conference featuring industry leaders and innovative startups.
+                    </p>
                 </div>
-            </section>
+            </div>
+
+            {/* Event 2 - Wedding */}
+            <div 
+                className="group relative overflow-hidden rounded-lg shadow-lg transition-all duration-500 hover:shadow-2xl"
+                onMouseEnter={() => !isMobile && setHoveredEvent(1)}
+                onMouseLeave={() => !isMobile && setHoveredEvent(null)}
+                onClick={() => isMobile && setHoveredEvent(hoveredEvent === 1 ? null : 1)}
+            >
+                {/* Replace with your actual image */}
+                <img 
+                    src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                    alt="Wedding Celebration" 
+                    className={`w-full h-64 md:h-80 object-cover transition-all duration-500 ${hoveredEvent === 1 ? 'scale-110' : ''}`}
+                />
+                <div className={`absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4 md:p-6 ${isMobile && hoveredEvent === 1 ? 'bg-black/70' : ''}`}>
+                    <span className="text-amber-300 font-medium transition-all duration-300 group-hover:text-amber-400">Wedding</span>
+                    <h4 className="text-xl md:text-2xl font-bold text-white mt-1 transition-all duration-300 group-hover:text-amber-100">Sarah & Michael's Wedding</h4>
+                    <p className={`text-white/90 mt-2 transition-all duration-300 group-hover:text-white ${isMobile ? (hoveredEvent === 1 ? 'block' : 'hidden md:block') : 'block'}`}>
+                        A beautiful beachside wedding with sunset ceremony and elegant reception.
+                    </p>
+                </div>
+            </div>
+
+            {/* Event 3 - Music Festival */}
+            <div 
+                className="group relative overflow-hidden rounded-lg shadow-lg transition-all duration-500 hover:shadow-2xl"
+                onMouseEnter={() => !isMobile && setHoveredEvent(2)}
+                onMouseLeave={() => !isMobile && setHoveredEvent(null)}
+                onClick={() => isMobile && setHoveredEvent(hoveredEvent === 2 ? null : 2)}
+            >
+                {/* Replace with your actual image */}
+                <img 
+                    src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                    alt="Music Festival" 
+                    className={`w-full h-64 md:h-80 object-cover transition-all duration-500 ${hoveredEvent === 2 ? 'scale-110' : ''}`}
+                />
+                <div className={`absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4 md:p-6 ${isMobile && hoveredEvent === 2 ? 'bg-black/70' : ''}`}>
+                    <span className="text-amber-300 font-medium transition-all duration-300 group-hover:text-amber-400">Festival</span>
+                    <h4 className="text-xl md:text-2xl font-bold text-white mt-1 transition-all duration-300 group-hover:text-amber-100">Sunset Beats Festival</h4>
+                    <p className={`text-white/90 mt-2 transition-all duration-300 group-hover:text-white ${isMobile ? (hoveredEvent === 2 ? 'block' : 'hidden md:block') : 'block'}`}>
+                        3-day outdoor music festival featuring international artists and local talents.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        {/* Optional View All Button (uncomment if needed) */}
+        {/* <div className="text-center mt-8 md:mt-12 animate-pulse">
+            <button className="bg-gray-800 text-white font-semibold py-3 px-8 rounded hover:bg-gray-700 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                View All Events
+            </button>
+        </div> */}
+    </div>
+</section>
 
             {/* Add this to your globals.css or CSS file */}
             <style jsx>{`

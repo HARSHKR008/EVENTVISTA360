@@ -61,7 +61,7 @@ const InstructionModal = ({ setShowModal }) => {
 const pageDetails = [
   {
     pageName: 'home',
-    pagePath: '/'
+    pagePath: '/page'
   },
   {
     pageName: 'signup',
@@ -362,17 +362,14 @@ export const VoiceProvider = ({ children }) => {
   useEffect(() => {
     if (!hasRun.current) {
       hasRun.current = true;
-      // SpeechRecognition.startListening({ continuous: true });
-      // voiceResponse('Welcome to Vox Market. What are you shopping today?');
-      // triggerModal('Voice Assistant', 'I am listening');
+      SpeechRecognition.startListening({ continuous: true });
+      voiceResponse('Welcome to Event Vista. How can I help you today?');
+      triggerModal('Voice Assistant', 'I am listening');
     }
   }, [])
-
-  // open instruction modal after 3 seconds
+  // instruction modal is now controlled manually
   useEffect(() => {
-    setTimeout(() => {
-      setShowInstruction(true);
-    }, 3000);
+    setShowInstruction(false);
   }, [])
 
 
@@ -471,6 +468,21 @@ export const VoiceProvider = ({ children }) => {
   }
 
 
+  // Restart voice recognition after page navigation
+  useEffect(() => {
+    const handleRouteChange = () => {
+      if (!listening) {
+        SpeechRecognition.startListening({ continuous: true });
+      }
+    };
+
+    router.events?.on('routeChangeComplete', handleRouteChange);
+
+    return () => {
+      router.events?.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router, listening]);
+
   useEffect(() => {
     document.addEventListener('keydown', (e) => {
       // console.log(e.code);
@@ -491,16 +503,25 @@ export const VoiceProvider = ({ children }) => {
       synth.onvoiceschanged = loadVoices;
     }
   }, [])
-
   const loadVoices = () => {
     if (typeof window === 'undefined') return;
 
     const synth = window.speechSynthesis;
     const voices = synth.getVoices();
     setVoices(voices);
-    console.log(voices);
+    
     if (speech) {
-      speech.voice = voices[5];
+      // Try to find an English voice, preferably male
+      const englishVoice = voices.find(voice => 
+        voice.lang.includes('en-') && voice.name.toLowerCase().includes('male')
+      ) || voices.find(voice => 
+        voice.lang.includes('en-')
+      ) || voices[0];
+
+      speech.voice = englishVoice;
+      speech.pitch = 1; // Normal pitch
+      speech.rate = 1.1; // Slightly faster than normal
+      speech.volume = 1; // Full volume
     }
   }
 
@@ -549,16 +570,15 @@ export const VoiceProvider = ({ children }) => {
         )}
       </div>
 
-      {children}
-      <InfoModal {...modalOptions} showModal={showModal} setShowModal={setShowModal} />
-      {/* {
+      {children}      <InfoModal {...modalOptions} showModal={showModal} setShowModal={setShowModal} />
+      {
         showInstruction &&
-        <div className='fixed top-0 left-0 w-full h-full bg-slate-900 opacity-90 z-20'>
-          <div className='h-full backdrop-blur-md'>
+        <div className='fixed top-0 left-0 w-full h-full bg-slate-900/80 z-20'>
+          <div className='h-full backdrop-blur-sm'>
             <InstructionModal setShowModal={setShowInstruction} />
           </div>
         </div>
-      } */}
+      }
     </VoiceContext.Provider>
   )
 }

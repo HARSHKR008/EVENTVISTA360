@@ -8,83 +8,126 @@ const VenueForm = () => {
   const [normalImages, setNormalImages] = useState([]);
   const [images360, setImages360] = useState([]);
   const [modelImages, setModelImages] = useState([]);
-  const [uploading, setUploading] = useState(false); // Add this line
+  const [uploading, setUploading] = useState(false);
 
   const venuseForm = useFormik({
     initialValues: {
       name: '',
       description: '',
       location: '',
-      capacity: 0,
+      capacity: '',
       category: '',
       modelname: '',
       normalImages: [],
       images360: [],
       model360: []
     },
+    validate: (values) => {
+      const errors = {};
+      
+      if (!values.name) errors.name = 'Venue name is required';
+      if (!values.description) errors.description = 'Description is required';
+      if (!values.location) errors.location = 'Location is required';
+      if (!values.capacity) errors.capacity = 'Capacity is required';
+      if (!values.category) errors.category = 'Category is required';
+      if (normalImages.length === 0) errors.normalImages = 'At least one normal image is required';
+      // Add validation for modelname if model images exist
+      if (modelImages.length > 0 && !values.modelname) {
+        errors.modelname = 'Model name is required when adding model images';
+      }
+      
+      return errors;
+    },
     onSubmit: (values, {resetForm}) => {
+      // Check if any images are uploaded
+      if (normalImages.length === 0) {
+        toast.error('Please upload at least one normal image');
+        return;
+      }
+
       const formData = {
         name: values.name,
         description: values.description,
         location: values.location,
-        capacity: values.capacity,
+        capacity: parseInt(values.capacity, 10),
         category: values.category,
         imgurl: normalImages,
-        images360: images360,
-        model360: [{
+        images360: images360,  // This can now be empty
+        model360: modelImages.length > 0 ? [{
           name: values.modelname,
           description: values.description,
           images360: modelImages
-        }]
+        }] : []
       };
       
       axios.post(`${process.env.NEXT_PUBLIC_API_URL}/venue/add`, formData)
-      .then((result) => {
-        console.log(result.data);
-        toast.success('Venue added successfully');
-        resetForm();
-        setNormalImages([]);
-        setImages360([]);
-        setModelImages([]);
-      }).catch((err) => {
-        console.log(err);
-        toast.error('Failed to add venue');
-      });
+        .then((result) => {
+          console.log(result.data);
+          toast.success('Venue added successfully');
+          resetForm();
+          setNormalImages([]);
+          setImages360([]);
+          setModelImages([]);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error(err.response?.data?.message || 'Failed to add venue');
+        });
     }
   });
 
   const uploadImages = async (e, type) => {
     const files = Array.from(e.target.files);
+    console.log(`Attempting to upload ${files.length} files of type ${type}`);
+    
+    if (files.length === 0) {
+      toast.error('Please select at least one file to upload');
+      return;
+    }
+
     setUploading(true);
 
     try {
+      // Process all files without a fixed batch size limit for 360° images
       const uploadPromises = files.map(file => {
         const fd = new FormData();
         fd.append('file', file);
         fd.append('upload_preset', 'event360');
         fd.append('cloud_name', 'dxanhgmd8');
 
-        return axios.post('https://api.cloudinary.com/v1_1/dxanhgmd8/image/upload', fd);
+        return axios.post('https://api.cloudinary.com/v1_1/dxanhgmd8/image/upload', fd)
+          .then(response => response.data.url)
+          .catch(error => {
+            console.error('Error uploading file:', error);
+            toast.error(`Failed to upload ${file.name}`);
+            return null;
+          });
       });
 
-      const responses = await Promise.all(uploadPromises);
-      const newUrls = responses.map(response => response.data.url);
+      const results = await Promise.all(uploadPromises);
+      const successfulUploads = results.filter(url => url !== null);
       
-      switch(type) {
-        case 'normal':
-          setNormalImages(prev => [...prev, ...newUrls]);
-          break;
-        case '360':
-          setImages360(prev => [...prev, ...newUrls]);
-          break;
-        case 'model':
-          setModelImages(prev => [...prev, ...newUrls]);
-          break;
+      if (successfulUploads.length > 0) {
+        // Update the UI with all uploaded images
+        switch(type) {
+          case 'normal':
+            setNormalImages(prev => [...prev, ...successfulUploads]);
+            break;
+          case '360':
+            setImages360(prev => [...prev, ...successfulUploads]);
+            break;
+          case 'model':
+            setModelImages(prev => [...prev, ...successfulUploads]);
+            break;
+        }
+        
+        toast.success(`Successfully uploaded ${successfulUploads.length} files!`);
+      } else {
+        toast.error('No files were uploaded successfully');
       }
-      toast.success('Files uploaded successfully');
     } catch (err) {
-      console.log(err);
-      toast.error('Failed to upload files');
+      console.error('Upload process error:', err);
+      toast.error('Upload process failed. Please try again.');
     } finally {
       setUploading(false);
     }
@@ -133,9 +176,7 @@ const VenueForm = () => {
                 onChange={venuseForm.handleChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               />
-            </div>
-
-            <div>
+            </div>            <div>
               <label htmlFor="location" className="block text-sm font-medium text-gray-700">Address</label>
               <input
                 type="text"
@@ -144,9 +185,20 @@ const VenueForm = () => {
                 value={venuseForm.values.location}
                 onChange={venuseForm.handleChange}
                 className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="capacity" className="block text-sm font-medium text-gray-700">Capacity</label>
+              <input
+                type="number"
+                id="capacity"
+                name="capacity"
+                value={venuseForm.values.capacity}
+                onChange={venuseForm.handleChange}
+                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 min="1"
               />
-
             </div>
 
             <div>
@@ -266,6 +318,20 @@ const VenueForm = () => {
                 onChange={venuseForm.handleChange}
                 className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               />
+            </div>
+            <div>
+              <label htmlFor="modelname" className="block text-sm font-medium text-gray-700">Model Name</label>
+              <input
+                type="text"
+                id="modelname"
+                name="modelname"
+                value={venuseForm.values.modelname}
+                onChange={venuseForm.handleChange}
+                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              />
+              {modelImages.length > 0 && !venuseForm.values.modelname && (
+                <p className="mt-1 text-sm text-red-600">Model name is required when adding model images</p>
+              )}
             </div>
 
             <div className="flex justify-end">
